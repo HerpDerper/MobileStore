@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragments.NotificationsFragment">
+
+    <ImageButton
+        android:id="@+id/btnAvatar"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="10sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/txtLogin"
+        android:layout_marginTop="10sp"
+        android:layout_width="325dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnAvatar" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnShowInformation"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/styles"
+        android:gravity="center"
+        android:text="Показать данные"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtLogin"
+        android:layout_marginTop="20sp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnChangeInformation"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/styles"
+        android:gravity="center"
+        android:text="Изменить данные"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnShowInformation"
+        android:layout_marginTop="20sp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnLogOut"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/styles"
+        android:gravity="center"
+        android:text="Выйти из аккаунта"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnChangeInformation"
+        android:layout_marginTop="20sp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnDeleteAccount"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/styles"
+        android:gravity="center"
+        android:text="Удалить аккаунт"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnLogOut"
+        android:layout_marginTop="20sp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

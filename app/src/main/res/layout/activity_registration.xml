@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegistrationActivity">
+
+    <ImageView
+        android:id="@+id/imgAvatar"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginRight="15sp"
+        android:layout_marginTop="5sp"
+        android:src="@drawable/walle" />
+
+    <EditText
+        android:id="@+id/txtUserSurname"
+        android:layout_width="325dp"
+        android:layout_height="40dp"
+        android:text=""
+        android:gravity="left"
+        android:inputType="textPersonName|textCapWords"
+        android:hint="Фамилия"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="120sp"/>
+
+    <EditText
+        android:id="@+id/txtUserName"
+        android:layout_width="325dp"
+        android:layout_height="40dp"
+        android:text=""
+        android:gravity="left"
+        android:inputType="textPersonName|textCapWords"
+        android:hint="Имя"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtUserSurname"
+        android:layout_marginTop="10sp"/>
+
+    <EditText
+        android:id="@+id/txtEmail"
+        android:layout_width="325dp"
+        android:layout_height="40dp"
+        android:text=""
+        android:gravity="left"
+        android:hint="Email"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtUserName"
+        android:layout_marginTop="10sp"/>
+
+    <EditText
+        android:id="@+id/txtAddress"
+        android:layout_width="325dp"
+        android:layout_height="40dp"
+        android:text=""
+        android:gravity="left"
+        android:hint="Адрес"
+        android:inputType="textCapWords"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtEmail"
+        android:layout_marginTop="10sp"/>
+
+    <EditText
+        android:id="@+id/txtDateOfBirth"
+        android:layout_width="325dp"
+        android:layout_height="40dp"
+        android:text=""
+        android:gravity="left"
+        android:hint="Дата рождения"
+        android:inputType="date"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtAddress"
+        android:layout_marginTop="10sp"/>
+
+    <EditText
+        android:id="@+id/txtLogin"
+        android:layout_width="325dp"
+        android:layout_height="40dp"
+        android:text=""
+        android:gravity="left"
+        android:hint="Логин"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtDateOfBirth"
+        android:layout_marginTop="10sp"/>
+
+    <EditText
+        android:id="@+id/txtPassword"
+        android:layout_width="325dp"
+        android:layout_height="40dp"
+        android:text=""
+        android:gravity="left"
+        android:hint="Пароль"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtLogin"
+        android:layout_marginTop="10sp"/>
+
+    <CheckBox
+        android:layout_width="325dp"
+        android:layout_height="40dp"
+        android:text="Показывать пароль"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtPassword"
+        android:layout_marginTop="10sp"
+        android:id="@+id/showPassword"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnChosePicture"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/styles"
+        android:gravity="center"
+        android:text="Выбрать изображение"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="30sp"
+        app:layout_constraintTop_toBottomOf="@+id/showPassword"
+        android:onClick="imageChoseClick"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnRegister"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/styles"
+        android:gravity="center"
+        android:text="Зарегистрироваться"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnChosePicture"
+        android:layout_marginTop="30sp"
+        android:onClick="registerClick"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
