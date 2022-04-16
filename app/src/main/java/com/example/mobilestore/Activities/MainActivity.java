@@ -1,4 +1,4 @@
-package com.example.mobilestore;
+package com.example.mobilestore.Activities;
 
 import android.os.Bundle;
 
@@ -8,6 +8,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.mobilestore.R;
 import com.example.mobilestore.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {

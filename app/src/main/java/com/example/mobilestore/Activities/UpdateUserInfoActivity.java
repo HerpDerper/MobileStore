@@ -1,4 +1,4 @@
-package com.example.mobilestore;
+package com.example.mobilestore.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,22 +13,19 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.mobilestore.Models.User;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.example.mobilestore.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Calendar;
 
-public class ChangeInformationActivity extends AppCompatActivity {
+public class UpdateUserInfoActivity extends AppCompatActivity {
 
     private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
     private FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -37,49 +34,39 @@ public class ChangeInformationActivity extends AppCompatActivity {
     EditText txtLogin, txtPassword, txtAddress, txtEmail, txtUserName, txtUserSurname, txtDateOfBirth;
     Button btnChangeInformation;
     DatePickerDialog.OnDateSetListener picker;
+    Bundle bundle;
+    private String IdUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_change_information);
+        setContentView(R.layout.activity_update_user_info);
         initialize();
         setData();
-        showPassword.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b)
-                    txtPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                else
-                    txtPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
-            }
+        showPassword.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (b)
+                txtPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+            else
+                txtPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
         });
-        picker = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int year, int monthOfYear, int dauOfMonth) {
-                date.set(Calendar.YEAR, year);
-                date.set(Calendar.MONTH, monthOfYear);
-                date.set(Calendar.DAY_OF_MONTH, dauOfMonth);
-                txtDateOfBirth.setText(DateUtils.formatDateTime(getApplicationContext(),
-                        date.getTimeInMillis(),
-                        DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR));
-            }
+        picker = (datePicker, year, monthOfYear, dauOfMonth) -> {
+            date.set(Calendar.YEAR, year);
+            date.set(Calendar.MONTH, monthOfYear);
+            date.set(Calendar.DAY_OF_MONTH, dauOfMonth);
+            txtDateOfBirth.setText(DateUtils.formatDateTime(getApplicationContext(),
+                    date.getTimeInMillis(),
+                    DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR));
         };
-        txtDateOfBirth.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                    new DatePickerDialog(ChangeInformationActivity.this, picker,
-                            date.get(Calendar.YEAR),
-                            date.get(Calendar.MONTH),
-                            date.get(Calendar.DAY_OF_MONTH)).show();
-                }
-                return true;
+        txtDateOfBirth.setOnTouchListener((view, motionEvent) -> {
+            if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                new DatePickerDialog(UpdateUserInfoActivity.this, picker,
+                        date.get(Calendar.YEAR),
+                        date.get(Calendar.MONTH),
+                        date.get(Calendar.DAY_OF_MONTH)).show();
             }
+            return true;
         });
-        txtDateOfBirth.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-            }
+        txtDateOfBirth.setOnFocusChangeListener((view, b) -> {
         });
     }
 
@@ -94,21 +81,28 @@ public class ChangeInformationActivity extends AppCompatActivity {
         txtUserSurname = findViewById(R.id.txtUserSurname);
         txtDateOfBirth = findViewById(R.id.txtDateOfBirth);
         btnChangeInformation = findViewById(R.id.btnChangeInformation);
+        bundle = getIntent().getExtras();
+        if(bundle.getString("IdUser")!=null){
+            IdUser = bundle.getString("IdUser");
+        }
     }
 
     private void setData() {
-        DocumentReference userReference = firebaseFirestore.collection("Users").document(currentUser.getUid());
-        userReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                User user = documentSnapshot.toObject(User.class);
-                txtLogin.setText(user.getLogin());
-                txtAddress.setText(user.getAddress());
-                txtEmail.setText(user.getEmail());
-                txtUserName.setText(user.getUserName());
-                txtDateOfBirth.setText(user.getDateOfBirth());
-                txtUserSurname.setText(user.getUserSurname());
-            }
+        DocumentReference userReference;
+        if(IdUser!=null){
+            userReference = firebaseFirestore.collection("Users").document(IdUser);
+        }
+        else{
+            userReference = firebaseFirestore.collection("Users").document(currentUser.getUid());
+        }
+        userReference.get().addOnSuccessListener(documentSnapshot -> {
+            User user = documentSnapshot.toObject(User.class);
+            txtLogin.setText(user.getLogin());
+            txtAddress.setText(user.getAddress());
+            txtEmail.setText(user.getEmail());
+            txtUserName.setText(user.getUserName());
+            txtDateOfBirth.setText(user.getDateOfBirth());
+            txtUserSurname.setText(user.getUserSurname());
         });
     }
 

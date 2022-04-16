@@ -16,17 +16,12 @@ import com.example.mobilestore.Models.CommentLikes;
 import com.example.mobilestore.R;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
 public class CommentAdapter extends FirestoreRecyclerAdapter<Comment, CommentAdapter.CommentHolder> {
@@ -47,14 +42,11 @@ public class CommentAdapter extends FirestoreRecyclerAdapter<Comment, CommentAda
         holder.txtTimeComment.setText(model.getTimeComment());
         holder.txtLikeCount.setText(String.valueOf(model.getLikeCount()));
         DocumentReference userReference = firebaseFirestore.collection("Users").document(model.getUserName());
-        userReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                holder.txtLogin.setText(documentSnapshot.getString("login"));
-                Picasso.get()
-                        .load(documentSnapshot.getString("avatar"))
-                        .into(holder.imgAvatar);
-            }
+        userReference.get().addOnSuccessListener(documentSnapshot -> {
+            holder.txtLogin.setText(documentSnapshot.getString("login"));
+            Picasso.get()
+                    .load(documentSnapshot.getString("avatar"))
+                    .into(holder.imgAvatar);
         });
         holder.rtnRating.setRating(model.getRating());
     }
@@ -86,38 +78,29 @@ public class CommentAdapter extends FirestoreRecyclerAdapter<Comment, CommentAda
             txtLikeCount = itemView.findViewById(R.id.txtLikeCount);
             btnLike = itemView.findViewById(R.id.btnLike);
             rtnRating = itemView.findViewById(R.id.rtnRating);
-            btnLike.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    commentId = commentInformation(getAdapterPosition());
-                    Query query = firebaseFirestore.collection("CommentLikes")
-                            .whereEqualTo("commentName", commentId)
-                            .whereEqualTo("userName", currentUser.getUid());
-                    query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful()) {
-                                for (QueryDocumentSnapshot document : task.getResult()) {
-                                    commentLikeId = document.getId();
-                                }
-                                documentCount = task.getResult().size();
-                                if (documentCount == 0) addCommentLike(commentId);
-                                else deleteCommentLike(commentId, commentLikeId);
-                            }
+            btnLike.setOnClickListener(view -> {
+                commentId = commentInformation(getAdapterPosition());
+                Query query = firebaseFirestore.collection("CommentLikes")
+                        .whereEqualTo("commentName", commentId)
+                        .whereEqualTo("userName", currentUser.getUid());
+                query.get().addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            commentLikeId = document.getId();
                         }
-                    });
-                }
+                        documentCount = task.getResult().size();
+                        if (documentCount == 0) addCommentLike(commentId);
+                        else deleteCommentLike(commentId, commentLikeId);
+                    }
+                });
             });
         }
 
         private void addCommentLike(String commentId) {
             DocumentReference commentReference = firebaseFirestore.collection("Comments").document(commentId);
-            commentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                @Override
-                public void onSuccess(DocumentSnapshot documentSnapshot) {
-                    int likeCount = Integer.parseInt(documentSnapshot.get("likeCount").toString()) + 1;
-                    commentReference.update("likeCount", likeCount);
-                }
+            commentReference.get().addOnSuccessListener(documentSnapshot -> {
+                int likeCount = Integer.parseInt(documentSnapshot.get("likeCount").toString()) + 1;
+                commentReference.update("likeCount", likeCount);
             });
             DocumentReference commentLikeReference = firebaseFirestore.collection("CommentLikes").document();
             CommentLikes commentLikes = new CommentLikes(currentUser.getUid(), commentId);
@@ -126,12 +109,9 @@ public class CommentAdapter extends FirestoreRecyclerAdapter<Comment, CommentAda
 
         private void deleteCommentLike(String commentId, String commentLikeId) {
             DocumentReference commentReference = firebaseFirestore.collection("Comments").document(commentId);
-            commentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                @Override
-                public void onSuccess(DocumentSnapshot documentSnapshot) {
-                    int likeCount = Integer.parseInt(documentSnapshot.get("likeCount").toString()) - 1;
-                    commentReference.update("likeCount", likeCount);
-                }
+            commentReference.get().addOnSuccessListener(documentSnapshot -> {
+                int likeCount = Integer.parseInt(documentSnapshot.get("likeCount").toString()) - 1;
+                commentReference.update("likeCount", likeCount);
             });
             DocumentReference commentLikeReference = firebaseFirestore.collection("CommentLikes").document(commentLikeId);
             commentLikeReference.delete();

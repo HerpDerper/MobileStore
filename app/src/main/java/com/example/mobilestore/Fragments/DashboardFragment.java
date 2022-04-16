@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.mobilestore.Adapters.CartAdapter;
+import com.example.mobilestore.Adapters.CartUserAdapter;
 import com.example.mobilestore.Models.Cart;
 import com.example.mobilestore.databinding.FragmentDashboardBinding;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -27,7 +27,7 @@ public class DashboardFragment extends Fragment {
     private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
     private FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
     private CollectionReference collectionReference = firebaseFirestore.collection("Carts");
-    private CartAdapter adapter;
+    private CartUserAdapter adapter;
     private RecyclerView recyclerView;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -52,7 +52,7 @@ public class DashboardFragment extends Fragment {
         FirestoreRecyclerOptions<Cart> options = new FirestoreRecyclerOptions.Builder<Cart>()
                 .setQuery(query, Cart.class)
                 .build();
-        adapter = new CartAdapter(options);
+        adapter = new CartUserAdapter(options);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(adapter);

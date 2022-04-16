@@ -1,4 +1,4 @@
-package com.example.mobilestore;
+package com.example.mobilestore.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,11 +12,10 @@ import android.widget.Toast;
 
 import com.example.mobilestore.Models.Comment;
 import com.example.mobilestore.Models.Product;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.example.mobilestore.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Calendar;
@@ -58,33 +57,26 @@ public class AddCommentActivity extends AppCompatActivity {
         float rating = rtnRating.getRating();
         updateProduct(rating);
         addComment(rating);
-        Intent intent = new Intent(AddCommentActivity.this, ProductInfoActivity.class);
-        intent.putExtra("IdProduct", IdProduct);
-        startActivity(intent);
+        startActivity(new Intent(AddCommentActivity.this, ProductInfoActivity.class).putExtra("IdProduct", IdProduct));
         finish();
     }
 
     public void cancelCommentClick(View view) {
-        Intent intent = new Intent(AddCommentActivity.this, ProductInfoActivity.class);
-        intent.putExtra("IdProduct", IdProduct);
-        startActivity(intent);
+        startActivity(new Intent(AddCommentActivity.this, ProductInfoActivity.class).putExtra("IdProduct", IdProduct));
         finish();
     }
 
     private void updateProduct(float rating) {
         DocumentReference productReference = firebaseFirestore.collection("Products").document(IdProduct);
-        productReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                Product product = documentSnapshot.toObject(Product.class);
-                float oldRating = product.getRating();
-                int ratingCount = product.getRatingCount();
-                float ratingAll = oldRating * ratingCount;
-                ratingAll += rating;
-                ratingAll = ratingAll / (ratingCount + 1);
-                productReference.update("ratingCount", ratingCount + 1);
-                productReference.update("rating", ratingAll);
-            }
+        productReference.get().addOnSuccessListener(documentSnapshot -> {
+            Product product = documentSnapshot.toObject(Product.class);
+            float oldRating = product.getRating();
+            int ratingCount = product.getRatingCount();
+            float ratingAll = oldRating * ratingCount;
+            ratingAll += rating;
+            ratingAll = ratingAll / (ratingCount + 1);
+            productReference.update("ratingCount", ratingCount + 1);
+            productReference.update("rating", ratingAll);
         });
     }
 

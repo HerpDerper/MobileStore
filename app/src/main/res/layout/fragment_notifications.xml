@@ -6,8 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".Fragments.NotificationsFragment">
 
-    <ImageButton
-        android:id="@+id/btnAvatar"
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imgAvatar"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginTop="10sp"
@@ -23,7 +23,7 @@
         android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnAvatar" />
+        app:layout_constraintTop_toBottomOf="@+id/imgAvatar" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnShowInformation"

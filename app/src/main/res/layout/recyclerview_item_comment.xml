@@ -39,7 +39,7 @@
             app:layout_constraintStart_toEndOf="@+id/txtLogin"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imgAvatar"
             android:layout_width="50dp"
             android:layout_height="50dp"

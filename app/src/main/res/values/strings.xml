@@ -3,4 +3,10 @@
     <string name="title_home">Главная</string>
     <string name="title_dashboard">Корзина</string>
     <string name="title_notifications">Профиль</string>
+    <string name="title_data">Данные</string>
+    <string name="carts_string">Корзины</string>
+    <string name="users_string">Пользователи</string>
+    <string name="categories_string">Категории</string>
+    <string name="manufacturers_string">Производители</string>
+    <string name="products_string">Товары</string>
 </resources>

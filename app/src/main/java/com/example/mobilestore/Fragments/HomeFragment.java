@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mobilestore.Models.Product;
 
-import com.example.mobilestore.Adapters.ProductAdapter;
+import com.example.mobilestore.Adapters.ProductUserAdapter;
 import com.example.mobilestore.R;
 import com.example.mobilestore.databinding.FragmentHomeBinding;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -30,7 +30,7 @@ public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
     private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
     private CollectionReference collectionReference = firebaseFirestore.collection("Products");
-    private ProductAdapter adapter;
+    private ProductUserAdapter adapter;
     private RecyclerView recyclerView;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -81,7 +81,7 @@ public class HomeFragment extends Fragment {
         FirestoreRecyclerOptions<Product> options = new FirestoreRecyclerOptions.Builder<Product>()
                 .setQuery(query, Product.class)
                 .build();
-        adapter = new ProductAdapter(options);
+        adapter = new ProductUserAdapter(options);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity().getApplicationContext(), 2, GridLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(adapter);

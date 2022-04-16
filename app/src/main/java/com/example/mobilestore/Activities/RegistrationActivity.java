@@ -1,6 +1,5 @@
-package com.example.mobilestore;
+package com.example.mobilestore.Activities;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -19,15 +18,12 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.mobilestore.Models.User;
-import com.google.android.gms.tasks.Continuation;
-import com.google.android.gms.tasks.OnCompleteListener;
+import com.example.mobilestore.R;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -42,7 +38,7 @@ import java.util.Locale;
 
 public class RegistrationActivity extends AppCompatActivity {
 
-    private StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+    private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
     private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     Calendar date;
@@ -60,42 +56,30 @@ public class RegistrationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
         initialize();
-        showPassword.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b)
-                    txtPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                else
-                    txtPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
-            }
+        showPassword.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (b)
+                txtPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+            else
+                txtPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
         });
-        picker = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int year, int monthOfYear, int dauOfMonth) {
-                date.set(Calendar.YEAR, year);
-                date.set(Calendar.MONTH, monthOfYear);
-                date.set(Calendar.DAY_OF_MONTH, dauOfMonth);
-                txtDateOfBirth.setText(DateUtils.formatDateTime(getApplicationContext(),
-                        date.getTimeInMillis(),
-                        DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR));
-            }
+        picker = (datePicker, year, monthOfYear, dauOfMonth) -> {
+            date.set(Calendar.YEAR, year);
+            date.set(Calendar.MONTH, monthOfYear);
+            date.set(Calendar.DAY_OF_MONTH, dauOfMonth);
+            txtDateOfBirth.setText(DateUtils.formatDateTime(getApplicationContext(),
+                    date.getTimeInMillis(),
+                    DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR));
         };
-        txtDateOfBirth.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                    new DatePickerDialog(RegistrationActivity.this, picker,
-                            date.get(Calendar.YEAR),
-                            date.get(Calendar.MONTH),
-                            date.get(Calendar.DAY_OF_MONTH)).show();
-                }
-                return true;
+        txtDateOfBirth.setOnTouchListener((view, motionEvent) -> {
+            if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                new DatePickerDialog(RegistrationActivity.this, picker,
+                        date.get(Calendar.YEAR),
+                        date.get(Calendar.MONTH),
+                        date.get(Calendar.DAY_OF_MONTH)).show();
             }
+            return true;
         });
-        txtDateOfBirth.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-            }
+        txtDateOfBirth.setOnFocusChangeListener((view, b) -> {
         });
     }
 
@@ -171,19 +155,11 @@ public class RegistrationActivity extends AppCompatActivity {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
         byte[] data = byteArrayOutputStream.toByteArray();
-        final StorageReference reference = storageRef.child(((BitmapDrawable) imgAvatar.getDrawable()).getBitmap().toString().split("@")[1] + "_image");
+        final StorageReference reference = storageReference.child(((BitmapDrawable) imgAvatar.getDrawable()).getBitmap().toString().split("@")[1] + "_image");
         UploadTask uploadTask = reference.putBytes(data);
-        Task<Uri> task = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-            @Override
-            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                return reference.getDownloadUrl();
-            }
-        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-            @Override
-            public void onComplete(@NonNull Task<Uri> task) {
-                imageUri = task.getResult();
-                createNewUser();
-            }
+        Task<Uri> task = uploadTask.continueWithTask(task12 -> reference.getDownloadUrl()).addOnCompleteListener(task1 -> {
+            imageUri = task1.getResult();
+            createNewUser();
         });
     }
 
