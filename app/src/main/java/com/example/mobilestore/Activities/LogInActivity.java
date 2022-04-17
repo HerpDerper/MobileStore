@@ -19,8 +19,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class LogInActivity extends AppCompatActivity {
 
-    FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
-    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    private final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+    private final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     CheckBox showPassword;
     EditText txtEmail, txtPassword;
     Button btnEnter, btnRegistration;

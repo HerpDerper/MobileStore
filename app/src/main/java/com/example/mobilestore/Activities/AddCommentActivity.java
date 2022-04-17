@@ -22,8 +22,8 @@ import java.util.Calendar;
 
 public class AddCommentActivity extends AppCompatActivity {
 
-    private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
-    private FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+    private final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+    private final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
     EditText txtText;
     RatingBar rtnRating;
     Calendar date;

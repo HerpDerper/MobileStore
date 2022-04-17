@@ -24,7 +24,7 @@ import com.squareup.picasso.Picasso;
 
 public class CartUserAdapter extends FirestoreRecyclerAdapter<Cart, CartUserAdapter.CartUserHolder> {
 
-    FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+    private final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
     private int productCount;
 
     public CartUserAdapter(@NonNull FirestoreRecyclerOptions<Cart> options) {

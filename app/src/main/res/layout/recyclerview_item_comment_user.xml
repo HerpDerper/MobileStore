@@ -15,6 +15,7 @@
 
         <TextView
             android:id="@+id/txtLogin"
+            android:text="Login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
@@ -28,6 +29,7 @@
 
         <TextView
             android:id="@+id/txtTimeComment"
+            android:text="TimeComment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
@@ -62,6 +64,7 @@
 
         <TextView
             android:id="@+id/txtText"
+            android:text="Text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10sp"
@@ -72,6 +75,7 @@
 
         <TextView
             android:id="@+id/txtLikeCount"
+            android:text="0"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10sp"

@@ -35,10 +35,10 @@ public class ProductAddUpdateActivity extends AppCompatActivity {
 
     private final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
     private final StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-    private EditText txtProductName, txtDescription, txtGuarantee, txtPrice, txtProductCount;
-    private Spinner spnManufacturerName, spnCategoryName;
-    private Button btnProductAddUpdate;
-    private ImageView imgProductImage;
+    EditText txtProductName, txtDescription, txtGuarantee, txtPrice, txtProductCount;
+    Spinner spnManufacturerName, spnCategoryName;
+    Button btnProductAddUpdate;
+    ImageView imgProductImage;
     List<String> listManufacturers;
     List<String> listCategories;
     ArrayAdapter<String> adapterManufacturers;
@@ -72,7 +72,7 @@ public class ProductAddUpdateActivity extends AppCompatActivity {
         finish();
     }
 
-    public void setImageClick(View view){
+    public void setImageClick(View view) {
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
         photoPickerIntent.setType("image/*");
         startActivityForResult(photoPickerIntent, 1);

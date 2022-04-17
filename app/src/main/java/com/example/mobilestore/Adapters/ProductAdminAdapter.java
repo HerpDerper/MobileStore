@@ -27,7 +27,7 @@ import com.squareup.picasso.Picasso;
 
 public class ProductAdminAdapter extends FirestoreRecyclerAdapter<Product, ProductAdminAdapter.ProductAdminHolder> {
 
-    private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+    private final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
 
     public ProductAdminAdapter(@NonNull FirestoreRecyclerOptions<Product> options) {
         super(options);
@@ -92,7 +92,7 @@ public class ProductAdminAdapter extends FirestoreRecyclerAdapter<Product, Produ
                         context.startActivity(new Intent(context, ProductAddUpdateActivity.class).putExtra("IdProduct", productInformation(getAdapterPosition())));
                         return true;
                     case R.id.mnDelete:
-                        deleteCommentLikes(productInformation(getAdapterPosition()));
+                        deleteComments(productInformation(getAdapterPosition()));
                         deleteItem(getAdapterPosition());
                         return true;
                     default:
@@ -103,7 +103,7 @@ public class ProductAdminAdapter extends FirestoreRecyclerAdapter<Product, Produ
         }
     }
 
-    private void deleteCommentLikes(String id) {
+    private void deleteComments(String id) {
         Query query = firebaseFirestore.collection("Comments")
                 .whereEqualTo("productName", id);
         query.get().addOnCompleteListener(task -> {

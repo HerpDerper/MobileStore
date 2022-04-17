@@ -37,10 +37,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class NotificationsFragment extends Fragment {
 
-    private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
-    private CollectionReference collectionReference = firebaseFirestore.collection("Users");
-    private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-    private StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+    private final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+    private final CollectionReference collectionReference = firebaseFirestore.collection("Users");
+    private final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    private final StorageReference storageRef = FirebaseStorage.getInstance().getReference();
     CircleImageView imgAvatar;
     TextView txtLogin;
     Button btnShowInformation, btnChangeInformation, btnLogOut, btnDeleteAccount;
@@ -102,6 +102,7 @@ public class NotificationsFragment extends Fragment {
                     .setPositiveButton("Да", (dialogInterface, i) -> {
                         deleteCommentLikes();
                         deleteComments();
+                        deleteCarts();
                         DocumentReference userReference = collectionReference.document(firebaseAuth.getCurrentUser().getUid());
                         userReference.delete();
                         firebaseAuth.getCurrentUser().delete();
@@ -197,6 +198,19 @@ public class NotificationsFragment extends Fragment {
             if (task.isSuccessful()) {
                 for (QueryDocumentSnapshot document : task.getResult()) {
                     DocumentReference commentReference = firebaseFirestore.collection("Comments").document(document.getId());
+                    commentReference.delete();
+                }
+            }
+        });
+    }
+
+    private void deleteCarts() {
+        Query query = firebaseFirestore.collection("Carts")
+                .whereEqualTo("userName", firebaseAuth.getCurrentUser().getUid());
+        query.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    DocumentReference commentReference = firebaseFirestore.collection("Carts").document(document.getId());
                     commentReference.delete();
                 }
             }

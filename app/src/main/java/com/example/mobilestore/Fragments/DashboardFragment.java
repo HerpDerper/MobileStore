@@ -24,11 +24,11 @@ import com.google.firebase.firestore.Query;
 public class DashboardFragment extends Fragment {
 
     private FragmentDashboardBinding binding;
-    private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
-    private FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-    private CollectionReference collectionReference = firebaseFirestore.collection("Carts");
+    private final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+    private final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+    private final CollectionReference collectionReference = firebaseFirestore.collection("Carts");
     private CartUserAdapter adapter;
-    private RecyclerView recyclerView;
+    RecyclerView recyclerView;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {

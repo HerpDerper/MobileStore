@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.mobilestore.Adapters.CommentAdapter;
+import com.example.mobilestore.Adapters.CommentUserAdapter;
 import com.example.mobilestore.Models.Cart;
 import com.example.mobilestore.Models.Comment;
 import com.example.mobilestore.Models.Product;
@@ -40,7 +40,7 @@ public class ProductInfoActivity extends AppCompatActivity {
     TextView txtPrice, txtExtraInfo, txtDescription, txtRating;
     RatingBar rtnRating;
     Button btnDeleteComment, btnAddComment, btnBuy, btnAddToCart;
-    private CommentAdapter adapter;
+    private CommentUserAdapter adapter;
     private RecyclerView recyclerView;
     Bundle bundle;
     private String IdProduct;
@@ -176,7 +176,7 @@ public class ProductInfoActivity extends AppCompatActivity {
         FirestoreRecyclerOptions<Comment> options = new FirestoreRecyclerOptions.Builder<Comment>()
                 .setQuery(query, Comment.class)
                 .build();
-        adapter = new CommentAdapter(options);
+        adapter = new CommentUserAdapter(options);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         recyclerView.setAdapter(adapter);
     }

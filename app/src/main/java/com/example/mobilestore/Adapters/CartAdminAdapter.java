@@ -25,7 +25,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CartAdminAdapter extends FirestoreRecyclerAdapter<Cart, CartAdminAdapter.CartAdminHolder> {
 
-    FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+    private final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
 
     public CartAdminAdapter(@NonNull FirestoreRecyclerOptions<Cart> options) {
         super(options);

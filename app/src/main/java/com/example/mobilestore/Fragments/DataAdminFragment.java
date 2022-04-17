@@ -8,7 +8,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,12 +16,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mobilestore.Adapters.CartAdminAdapter;
-import com.example.mobilestore.Adapters.CartUserAdapter;
 import com.example.mobilestore.Adapters.CategoryAdapter;
+import com.example.mobilestore.Adapters.CommentAdminAdapter;
 import com.example.mobilestore.Adapters.ProductAdminAdapter;
 import com.example.mobilestore.Adapters.UserAdapter;
 import com.example.mobilestore.Models.Cart;
 import com.example.mobilestore.Models.Category;
+import com.example.mobilestore.Models.Comment;
 import com.example.mobilestore.Models.Product;
 import com.example.mobilestore.Activities.ProductAddUpdateActivity;
 import com.example.mobilestore.Models.User;
@@ -35,14 +35,15 @@ import com.google.firebase.firestore.Query;
 
 public class DataAdminFragment extends Fragment {
 
-    private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+    private final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
     private FragmentDataAdminBinding binding;
-    private FloatingActionButton btnAddData;
-    private RecyclerView recyclerView;
+    FloatingActionButton btnAddData;
+    RecyclerView recyclerView;
     private UserAdapter adapterUser;
     private ProductAdminAdapter adapterProduct;
     private CategoryAdapter adapterCategory;
     private CartAdminAdapter adapterCart;
+    private CommentAdminAdapter adapterComment;
     private String adapterName = "Users";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -63,6 +64,7 @@ public class DataAdminFragment extends Fragment {
         adapterProduct.startListening();
         adapterCategory.startListening();
         adapterCart.startListening();
+        adapterComment.startListening();
         return root;
     }
 
@@ -80,12 +82,20 @@ public class DataAdminFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.mnCarts: {
-                adapterName = "Carts";
+            case R.id.mnUsers: {
+                adapterName = "Users";
+                break;
+            }
+            case R.id.mnProducts: {
+                adapterName = "Products";
                 break;
             }
             case R.id.mnCategories: {
                 adapterName = "Categories";
+                break;
+            }
+            case R.id.mnCarts: {
+                adapterName = "Carts";
                 break;
             }
             case R.id.mnComments: {
@@ -94,14 +104,6 @@ public class DataAdminFragment extends Fragment {
             }
             case R.id.mnManufacturers: {
                 adapterName = "Manufacturers";
-                break;
-            }
-            case R.id.mnProducts: {
-                adapterName = "Products";
-                break;
-            }
-            case R.id.mnUsers: {
-                adapterName = "Users";
                 break;
             }
         }
@@ -117,9 +119,10 @@ public class DataAdminFragment extends Fragment {
         adapterProduct.stopListening();
         adapterCategory.stopListening();
         adapterCart.stopListening();
+        adapterComment.stopListening();
     }
 
-    private void setAdapters(){
+    private void setAdapters() {
         Query query = firebaseFirestore.collection("Users");
         FirestoreRecyclerOptions<User> optionsUser = new FirestoreRecyclerOptions.Builder<User>()
                 .setQuery(query, User.class)
@@ -133,21 +136,26 @@ public class DataAdminFragment extends Fragment {
                 .setQuery(query, Category.class)
                 .build();
         query = firebaseFirestore.collection("Carts");
-        FirestoreRecyclerOptions<Cart> options = new FirestoreRecyclerOptions.Builder<Cart>()
+        FirestoreRecyclerOptions<Cart> optionsCart = new FirestoreRecyclerOptions.Builder<Cart>()
                 .setQuery(query, Cart.class)
+                .build();
+        query = firebaseFirestore.collection("Comments");
+        FirestoreRecyclerOptions<Comment> optionsComment = new FirestoreRecyclerOptions.Builder<Comment>()
+                .setQuery(query, Comment.class)
                 .build();
 
         adapterUser = new UserAdapter(optionsUser);
         adapterProduct = new ProductAdminAdapter(optionsProduct);
         adapterCategory = new CategoryAdapter(optionsCategory);
-        adapterCart = new CartAdminAdapter(options);
+        adapterCart = new CartAdminAdapter(optionsCart);
+        adapterComment = new CommentAdminAdapter(optionsComment);
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), LinearLayoutManager.VERTICAL, false));
     }
 
-    private void setRecyclerView(String name) {
-        switch (name) {
+    private void setRecyclerView(String adapterName) {
+        switch (adapterName) {
             case "Users": {
                 recyclerView.setAdapter(adapterUser);
                 break;
@@ -161,6 +169,14 @@ public class DataAdminFragment extends Fragment {
                 break;
             }
             case "Carts": {
+                recyclerView.setAdapter(adapterCart);
+                break;
+            }
+            case "Comments": {
+                recyclerView.setAdapter(adapterComment);
+                break;
+            }
+            case "Manufacturers": {
                 recyclerView.setAdapter(adapterCart);
                 break;
             }

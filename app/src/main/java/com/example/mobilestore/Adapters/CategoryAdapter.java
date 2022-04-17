@@ -14,8 +14,14 @@ import com.example.mobilestore.Models.Category;
 import com.example.mobilestore.R;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 public class CategoryAdapter extends FirestoreRecyclerAdapter<Category, CategoryAdapter.CategoryHolder> {
+
+    private final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
 
     public CategoryAdapter(@NonNull FirestoreRecyclerOptions<Category> options) {
         super(options);
@@ -63,6 +69,7 @@ public class CategoryAdapter extends FirestoreRecyclerAdapter<Category, Category
 
                         return true;
                     case R.id.mnDelete:
+                        deleteProducts();
                         deleteItem(getAdapterPosition());
                         return true;
                     default:
@@ -71,5 +78,18 @@ public class CategoryAdapter extends FirestoreRecyclerAdapter<Category, Category
             });
             popupMenu.show();
         }
+    }
+
+    private void deleteProducts(String id) {
+        Query query = firebaseFirestore.collection("Comments")
+                .whereEqualTo("productName", id);
+        query.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    DocumentReference commentReference = firebaseFirestore.collection("Comments").document(document.getId());
+                    commentReference.delete();
+                }
+            }
+        });
     }
 }

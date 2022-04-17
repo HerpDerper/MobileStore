@@ -24,20 +24,20 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.squareup.picasso.Picasso;
 
-public class CommentAdapter extends FirestoreRecyclerAdapter<Comment, CommentAdapter.CommentHolder> {
+public class CommentUserAdapter extends FirestoreRecyclerAdapter<Comment, CommentUserAdapter.CommentUserHolder> {
 
-    FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
-    private FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+    private final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+    private final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
     private int documentCount;
     private String commentLikeId;
     private String commentId;
 
-    public CommentAdapter(@NonNull FirestoreRecyclerOptions<Comment> options) {
+    public CommentUserAdapter(@NonNull FirestoreRecyclerOptions<Comment> options) {
         super(options);
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull CommentHolder holder, int position, @NonNull Comment model) {
+    protected void onBindViewHolder(@NonNull CommentUserHolder holder, int position, @NonNull Comment model) {
         holder.txtText.setText(model.getText());
         holder.txtTimeComment.setText(model.getTimeComment());
         holder.txtLikeCount.setText(String.valueOf(model.getLikeCount()));
@@ -53,23 +53,23 @@ public class CommentAdapter extends FirestoreRecyclerAdapter<Comment, CommentAda
 
     @NonNull
     @Override
-    public CommentHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_item_comment,
+    public CommentUserHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_item_comment_user,
                 parent, false);
-        return new CommentHolder(view);
+        return new CommentUserHolder(view);
     }
 
     public String commentInformation(int position) {
         return getSnapshots().getSnapshot(position).getReference().getId();
     }
 
-    class CommentHolder extends RecyclerView.ViewHolder {
+    class CommentUserHolder extends RecyclerView.ViewHolder {
         TextView txtText, txtLikeCount, txtLogin, txtTimeComment;
         ImageView imgAvatar;
         ImageButton btnLike;
         RatingBar rtnRating;
 
-        public CommentHolder(View itemView) {
+        public CommentUserHolder(View itemView) {
             super(itemView);
             imgAvatar = itemView.findViewById(R.id.imgAvatar);
             txtText = itemView.findViewById(R.id.txtText);

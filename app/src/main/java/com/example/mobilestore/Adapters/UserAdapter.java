@@ -21,8 +21,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UserAdapter extends FirestoreRecyclerAdapter<User, UserAdapter.UserHolder> {
 
-    StringBuilder builder = new StringBuilder();;
-    private AlertDialog.Builder dialog;
     public UserAdapter(@NonNull FirestoreRecyclerOptions<User> options) {
         super(options);
     }
@@ -60,9 +58,6 @@ public class UserAdapter extends FirestoreRecyclerAdapter<User, UserAdapter.User
             txtEmail = itemView.findViewById(R.id.txtEmail);
             txtRoleName = itemView.findViewById(R.id.txtRoleName);
             imgAvatar = itemView.findViewById(R.id.imgAvatar);
-            itemView.setOnClickListener(view -> {
-
-            });
         }
     }
 }

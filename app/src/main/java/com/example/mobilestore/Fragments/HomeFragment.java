@@ -28,10 +28,10 @@ import com.google.firebase.firestore.Query;
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
-    private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
-    private CollectionReference collectionReference = firebaseFirestore.collection("Products");
+    private final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+    private final CollectionReference collectionReference = firebaseFirestore.collection("Products");
     private ProductUserAdapter adapter;
-    private RecyclerView recyclerView;
+    RecyclerView recyclerView;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {

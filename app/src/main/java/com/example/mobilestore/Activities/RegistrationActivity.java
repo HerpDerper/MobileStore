@@ -38,17 +38,17 @@ import java.util.Locale;
 
 public class RegistrationActivity extends AppCompatActivity {
 
-    private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-    private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
-    private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    private final StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+    private final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+    private final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     Calendar date;
     DatePickerDialog.OnDateSetListener picker;
     CheckBox showPassword;
     EditText txtLogin, txtPassword, txtAddress, txtEmail, txtUserName, txtUserSurname, txtDateOfBirth;
     Button btnChosePicture, btnRegister;
     ImageView imgAvatar;
-    final int CAMERA_REQUEST = 1;
-    final int PIC_CROP = 2;
+    private final int CAMERA_REQUEST = 1;
+    private final int PIC_CROP = 2;
     Uri imageUri;
 
     @Override
