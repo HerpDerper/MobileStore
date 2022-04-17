@@ -44,8 +44,6 @@ public class ProductAddUpdateActivity extends AppCompatActivity {
     ArrayAdapter<String> adapterManufacturers;
     ArrayAdapter<String> adapterCategories;
     Uri imageUri;
-    private String manufacturerName;
-    private String categoryName;
     private int ratingCount;
     private float rating;
     private String IdProduct;
@@ -127,12 +125,11 @@ public class ProductAddUpdateActivity extends AppCompatActivity {
     }
 
     private void insertProduct() {
-        manufacturerName = spnManufacturerName.getSelectedItem().toString();
-        categoryName = spnCategoryName.getSelectedItem().toString();
+
         DocumentReference productReference = firebaseFirestore.collection("Products").document();
-        Product product = new Product(txtProductName.getText().toString().trim(), categoryName,
+        Product product = new Product(txtProductName.getText().toString().trim(), spnCategoryName.getSelectedItem().toString(),
                 txtDescription.getText().toString().trim(), txtGuarantee.getText().toString().trim(),
-                manufacturerName, imageUri.toString(),
+                spnManufacturerName.getSelectedItem().toString(), imageUri.toString(),
                 Integer.parseInt(txtProductCount.getText().toString().trim()), 0, 0, Float.parseFloat(txtPrice.getText().toString().trim()));
         productReference.set(product);
     }
@@ -204,12 +201,10 @@ public class ProductAddUpdateActivity extends AppCompatActivity {
     }
 
     private void updateProduct(String id) {
-        manufacturerName = spnManufacturerName.getSelectedItem().toString();
-        categoryName = spnCategoryName.getSelectedItem().toString();
         DocumentReference productReference = firebaseFirestore.collection("Products").document(id);
-        Product product = new Product(txtProductName.getText().toString().trim(), categoryName,
+        Product product = new Product(txtProductName.getText().toString().trim(), spnCategoryName.getSelectedItem().toString(),
                 txtDescription.getText().toString().trim(), txtGuarantee.getText().toString().trim(),
-                manufacturerName, imageUri.toString(),
+                spnManufacturerName.getSelectedItem().toString(), imageUri.toString(),
                 Integer.parseInt(txtProductCount.getText().toString().trim()), ratingCount, rating, Float.parseFloat(txtPrice.getText().toString().trim()));
         productReference.set(product);
     }
@@ -239,8 +234,6 @@ public class ProductAddUpdateActivity extends AppCompatActivity {
                     .load(product.getProductImage())
                     .resize(90, 90)
                     .into(imgProductImage);
-            manufacturerName = product.getManufacturerName();
-            categoryName = product.getCategoryName();
         });
     }
 }

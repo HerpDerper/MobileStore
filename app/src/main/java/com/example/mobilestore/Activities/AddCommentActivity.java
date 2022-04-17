@@ -13,9 +13,11 @@ import android.widget.Toast;
 import com.example.mobilestore.Models.Comment;
 import com.example.mobilestore.Models.Product;
 import com.example.mobilestore.R;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Calendar;
@@ -29,6 +31,7 @@ public class AddCommentActivity extends AppCompatActivity {
     Calendar date;
     Bundle bundle;
     private String IdProduct;
+    private String role;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +46,7 @@ public class AddCommentActivity extends AppCompatActivity {
         rtnRating = findViewById(R.id.rtnRating);
         bundle = getIntent().getExtras();
         IdProduct = bundle.getString("IdProduct");
+        if(bundle.getString("Role")!=null) role = bundle.getString("Role");
     }
 
     public void addCommentClick(View view) {
@@ -57,24 +61,35 @@ public class AddCommentActivity extends AppCompatActivity {
         float rating = rtnRating.getRating();
         updateProduct(rating);
         addComment(rating);
+        if (role != null)
+            startActivity(new Intent(AddCommentActivity.this, ProductInfoActivity.class).putExtra("IdProduct", IdProduct).putExtra("Role", role));
+        else
+            startActivity(new Intent(AddCommentActivity.this, ProductInfoActivity.class).putExtra("IdProduct", IdProduct));
         finish();
     }
 
     public void cancelCommentClick(View view) {
+        if (role != null)
+            startActivity(new Intent(AddCommentActivity.this, ProductInfoActivity.class).putExtra("IdProduct", IdProduct).putExtra("Role", role));
+        else
+            startActivity(new Intent(AddCommentActivity.this, ProductInfoActivity.class).putExtra("IdProduct", IdProduct));
         finish();
     }
 
     private void updateProduct(float rating) {
         DocumentReference productReference = firebaseFirestore.collection("Products").document(IdProduct);
-        productReference.get().addOnSuccessListener(documentSnapshot -> {
-            Product product = documentSnapshot.toObject(Product.class);
-            float oldRating = product.getRating();
-            int ratingCount = product.getRatingCount();
-            float ratingAll = oldRating * ratingCount;
-            ratingAll += rating;
-            ratingAll = ratingAll / (ratingCount + 1);
-            productReference.update("ratingCount", ratingCount + 1);
-            productReference.update("rating", ratingAll);
+        productReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                Product product = documentSnapshot.toObject(Product.class);
+                float oldRating = product.getRating();
+                int ratingCount = product.getRatingCount();
+                float ratingAll = oldRating * ratingCount;
+                ratingAll += rating;
+                ratingAll = ratingAll / (ratingCount + 1);
+                productReference.update("ratingCount", ratingCount + 1);
+                productReference.update("rating", ratingAll);
+            }
         });
     }
 

@@ -20,10 +20,12 @@ import com.example.mobilestore.Models.Comment;
 import com.example.mobilestore.Models.Product;
 import com.example.mobilestore.R;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -45,6 +47,7 @@ public class ProductInfoActivity extends AppCompatActivity {
     private int documentCount;
     private String IdComment;
     private int productCount;
+    private String role;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,14 +89,21 @@ public class ProductInfoActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerComments);
         bundle = getIntent().getExtras();
         IdProduct = bundle.getString("IdProduct");
+        if(bundle.getString("Role")!=null){
+            btnBuy.setVisibility(View.GONE);
+            btnAddToCart.setVisibility(View.GONE);
+            role = bundle.getString("Role");
+        }
     }
 
     public void buyClick(View view) {
-
     }
 
     public void addCommentClick(View view) {
-        startActivity(new Intent(this, AddCommentActivity.class).putExtra("IdProduct", IdProduct));
+        if(role!=null)
+            startActivity( new Intent(this, AddCommentActivity.class).putExtra("IdProduct", IdProduct).putExtra("Role", role));
+        else  startActivity( new Intent(this, AddCommentActivity.class).putExtra("IdProduct", IdProduct));
+        finish();
     }
 
     public void deleteCommentClick(View view) {
@@ -127,13 +137,16 @@ public class ProductInfoActivity extends AppCompatActivity {
                     Toast.makeText(ProductInfoActivity.this, "Товар добавлен в корзину", Toast.LENGTH_SHORT).show();
                 } else {
                     DocumentReference cartReference = firebaseFirestore.collection("Carts").document(IdCart);
-                    cartReference.get().addOnSuccessListener(documentSnapshot -> {
-                        if (productCount < Integer.parseInt(documentSnapshot.get("productCount").toString()) + 1) {
-                            Toast.makeText(ProductInfoActivity.this, "Товар не добавлен в корзину", Toast.LENGTH_SHORT).show();
-                            return;
+                    cartReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            if (productCount < Integer.parseInt(documentSnapshot.get("productCount").toString()) + 1) {
+                                Toast.makeText(ProductInfoActivity.this, "Товар не добавлен в корзину", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                            Toast.makeText(ProductInfoActivity.this, "Товар добавлен в корзину", Toast.LENGTH_SHORT).show();
+                            cartReference.update("productCount", Integer.parseInt(documentSnapshot.get("productCount").toString()) + 1);
                         }
-                        Toast.makeText(ProductInfoActivity.this, "Товар добавлен в корзину", Toast.LENGTH_SHORT).show();
-                        cartReference.update("productCount", Integer.parseInt(documentSnapshot.get("productCount").toString()) + 1);
                     });
                 }
             }
@@ -141,14 +154,10 @@ public class ProductInfoActivity extends AppCompatActivity {
     }
 
     private void getIncomingIntent() {
-        if(bundle.getString("Role").equals("Admin")){
-            btnAddToCart.setVisibility(View.GONE);
-            btnBuy.setVisibility(View.GONE);
-        }
         DocumentReference productReference = firebaseFirestore.collection("Products").document(IdProduct);
         productReference.get().addOnSuccessListener(documentSnapshot -> {
             Product product = documentSnapshot.toObject(Product.class);
-            txtExtraInfo.setText(product.getCategoryName() + "\n" + product.getManufacturerName() + "\nГарантия: " + product.getGuarantee());
+            txtExtraInfo.setText("Категория: " + product.getCategoryName() + "\nПроизводитель:" + product.getManufacturerName() + "\nГарантия: " + product.getGuarantee());
             Picasso.get()
                     .load(product.getProductImage())
                     .into(imgProductImage);
@@ -159,7 +168,6 @@ public class ProductInfoActivity extends AppCompatActivity {
             productCount = product.getProductCount();
             setTitle(product.getProductName());
         });
-
     }
 
     private void setRecyclerView() {
@@ -187,7 +195,7 @@ public class ProductInfoActivity extends AppCompatActivity {
                 ratingAll = 0;
             }
             productReference.update("rating", ratingAll);
-            txtRating.setText(ratingAll + " (" + String.valueOf(ratingCountNew) + " оценок)");
+            txtRating.setText(ratingAll + " (" + ratingCountNew + " оценок)");
             rtnRating.setRating(ratingAll);
         });
     }

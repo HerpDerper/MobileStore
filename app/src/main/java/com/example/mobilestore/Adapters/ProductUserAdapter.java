@@ -55,7 +55,7 @@ public class ProductUserAdapter extends FirestoreRecyclerAdapter<Product, Produc
             txtProductName = itemView.findViewById(R.id.txtProductName);
             itemView.setOnClickListener(view -> {
                 Context context = itemView.getContext();
-                context.startActivity(new Intent(context, ProductInfoActivity.class).putExtra("IdProduct", productInformation(getAdapterPosition())).putExtra("Role", "User"));
+                context.startActivity(new Intent(context, ProductInfoActivity.class).putExtra("IdProduct", productInformation(getAdapterPosition())));
             });
         }
     }

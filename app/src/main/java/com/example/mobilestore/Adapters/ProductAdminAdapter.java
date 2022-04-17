@@ -1,6 +1,5 @@
 package com.example.mobilestore.Adapters;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -20,16 +19,18 @@ import com.example.mobilestore.Activities.ProductAddUpdateActivity;
 import com.example.mobilestore.R;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.squareup.picasso.Picasso;
 
 public class ProductAdminAdapter extends FirestoreRecyclerAdapter<Product, ProductAdminAdapter.ProductAdminHolder> {
 
-    Activity activity;
+    private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
 
-    public ProductAdminAdapter(@NonNull FirestoreRecyclerOptions<Product> options, Activity activity) {
+    public ProductAdminAdapter(@NonNull FirestoreRecyclerOptions<Product> options) {
         super(options);
-        this.activity = activity;
-
     }
 
     @Override
@@ -90,6 +91,7 @@ public class ProductAdminAdapter extends FirestoreRecyclerAdapter<Product, Produ
                         context.startActivity(new Intent(context, ProductAddUpdateActivity.class).putExtra("IdProduct", productInformation(getAdapterPosition())));
                         return true;
                     case R.id.delete:
+                        deleteCommentLikes(productInformation(getAdapterPosition()));
                         deleteItem(getAdapterPosition());
                         return true;
                     default:
@@ -98,5 +100,18 @@ public class ProductAdminAdapter extends FirestoreRecyclerAdapter<Product, Produ
             });
             popupMenu.show();
         }
+    }
+
+    private void deleteCommentLikes(String id) {
+        Query query = firebaseFirestore.collection("Comments")
+                .whereEqualTo("productName", id);
+        query.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    DocumentReference commentReference = firebaseFirestore.collection("Comments").document(document.getId());
+                    commentReference.delete();
+                }
+            }
+        });
     }
 }
