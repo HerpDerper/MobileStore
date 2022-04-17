@@ -27,6 +27,8 @@
         <entry key="..\:/Users/HerpDerp/AndroidStudioProjects/MobileStore/app/src/main/res/layout/fragment_notifications.xml" value="0.17831813576494426" />
         <entry key="..\:/Users/HerpDerp/AndroidStudioProjects/MobileStore/app/src/main/res/layout/product_view.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/HerpDerp/AndroidStudioProjects/MobileStore/app/src/main/res/layout/recyclerview_item_cart.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/HerpDerp/AndroidStudioProjects/MobileStore/app/src/main/res/layout/recyclerview_item_cart_admin.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/HerpDerp/AndroidStudioProjects/MobileStore/app/src/main/res/layout/recyclerview_item_cart_user.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/HerpDerp/AndroidStudioProjects/MobileStore/app/src/main/res/layout/recyclerview_item_category.xml" value="0.17831813576494426" />
         <entry key="..\:/Users/HerpDerp/AndroidStudioProjects/MobileStore/app/src/main/res/layout/recyclerview_item_comment.xml" value="0.17831813576494426" />
         <entry key="..\:/Users/HerpDerp/AndroidStudioProjects/MobileStore/app/src/main/res/layout/recyclerview_item_product.xml" value="0.36666666666666664" />

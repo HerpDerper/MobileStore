@@ -62,7 +62,7 @@ public class CartUserAdapter extends FirestoreRecyclerAdapter<Cart, CartUserAdap
     @NonNull
     @Override
     public CartUserHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_item_cart,
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_item_cart_user,
                 parent, false);
         return new CartUserHolder(view);
     }

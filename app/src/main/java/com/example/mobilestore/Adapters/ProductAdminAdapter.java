@@ -87,11 +87,11 @@ public class ProductAdminAdapter extends FirestoreRecyclerAdapter<Product, Produ
             popupMenu.inflate(R.menu.popupmenu_full);
             popupMenu.setOnMenuItemClickListener(item -> {
                 switch (item.getItemId()) {
-                    case R.id.update:
+                    case R.id.mnUpdate:
                         Context context = itemView.getContext();
                         context.startActivity(new Intent(context, ProductAddUpdateActivity.class).putExtra("IdProduct", productInformation(getAdapterPosition())));
                         return true;
-                    case R.id.delete:
+                    case R.id.mnDelete:
                         deleteCommentLikes(productInformation(getAdapterPosition()));
                         deleteItem(getAdapterPosition());
                         return true;

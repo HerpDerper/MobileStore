@@ -3,11 +3,15 @@ package com.example.mobilestore.Fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.mobilestore.Adapters.ProductAdminAdapter;
 import com.example.mobilestore.Models.Product;
 import com.example.mobilestore.Activities.ProductAddUpdateActivity;
+import com.example.mobilestore.R;
 import com.example.mobilestore.databinding.FragmentDataAdminBinding;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -50,6 +55,11 @@ public class DataAdminFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         super.onCreate(savedInstanceState);
+    }
+
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_admin, menu);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
