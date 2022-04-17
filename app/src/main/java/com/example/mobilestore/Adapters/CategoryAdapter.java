@@ -1,5 +1,7 @@
 package com.example.mobilestore.Adapters;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mobilestore.Activities.ProductAddUpdateActivity;
 import com.example.mobilestore.Models.Category;
 import com.example.mobilestore.R;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -69,7 +72,7 @@ public class CategoryAdapter extends FirestoreRecyclerAdapter<Category, Category
 
                         return true;
                     case R.id.mnDelete:
-                        deleteProducts();
+                        deleteProducts(categoryInformation(getAdapterPosition()));
                         deleteItem(getAdapterPosition());
                         return true;
                     default:
@@ -81,12 +84,55 @@ public class CategoryAdapter extends FirestoreRecyclerAdapter<Category, Category
     }
 
     private void deleteProducts(String id) {
+        Query query = firebaseFirestore.collection("Products")
+                .whereEqualTo("categoryName", id);
+        query.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    DocumentReference commentReference = firebaseFirestore.collection("Products").document(document.getId());
+                    deleteComments(document.getId());
+                    deleteCarts(document.getId());
+                    commentReference.delete();
+                }
+            }
+        });
+    }
+
+    private void deleteComments(String id) {
         Query query = firebaseFirestore.collection("Comments")
                 .whereEqualTo("productName", id);
         query.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 for (QueryDocumentSnapshot document : task.getResult()) {
                     DocumentReference commentReference = firebaseFirestore.collection("Comments").document(document.getId());
+                    deleteCommentLikes(document.getId());
+                    commentReference.delete();
+                }
+            }
+        });
+    }
+
+    private void deleteCarts(String id) {
+        Query query = firebaseFirestore.collection("Carts")
+                .whereEqualTo("productName", id);
+        query.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    DocumentReference commentReference = firebaseFirestore.collection("Carts").document(document.getId());
+                    deleteCommentLikes(document.getId());
+                    commentReference.delete();
+                }
+            }
+        });
+    }
+
+    private void deleteCommentLikes(String id) {
+        Query query = firebaseFirestore.collection("CommentLikes")
+                .whereEqualTo("commentName", id);
+        query.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    DocumentReference commentReference = firebaseFirestore.collection("CommentLikes").document(document.getId());
                     commentReference.delete();
                 }
             }

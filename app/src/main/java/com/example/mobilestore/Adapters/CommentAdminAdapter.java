@@ -1,12 +1,10 @@
 package com.example.mobilestore.Adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.RatingBar;
@@ -15,14 +13,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.mobilestore.Activities.ProductAddUpdateActivity;
 import com.example.mobilestore.Models.Comment;
-import com.example.mobilestore.Models.CommentLikes;
 import com.example.mobilestore.R;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -106,9 +100,9 @@ public class CommentAdminAdapter extends FirestoreRecyclerAdapter<Comment, Comme
             popupMenu.show();
         }
 
-        private void deleteCommentLikes(String IdComment) {
+        private void deleteCommentLikes(String id) {
             Query query = firebaseFirestore.collection("CommentLikes")
-                    .whereEqualTo("commentName", IdComment);
+                    .whereEqualTo("commentName", id);
             query.get().addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
