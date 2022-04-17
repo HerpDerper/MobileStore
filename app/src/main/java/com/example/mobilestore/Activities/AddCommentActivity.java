@@ -13,11 +13,9 @@ import android.widget.Toast;
 import com.example.mobilestore.Models.Comment;
 import com.example.mobilestore.Models.Product;
 import com.example.mobilestore.R;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Calendar;
@@ -78,18 +76,15 @@ public class AddCommentActivity extends AppCompatActivity {
 
     private void updateProduct(float rating) {
         DocumentReference productReference = firebaseFirestore.collection("Products").document(IdProduct);
-        productReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                Product product = documentSnapshot.toObject(Product.class);
-                float oldRating = product.getRating();
-                int ratingCount = product.getRatingCount();
-                float ratingAll = oldRating * ratingCount;
-                ratingAll += rating;
-                ratingAll = ratingAll / (ratingCount + 1);
-                productReference.update("ratingCount", ratingCount + 1);
-                productReference.update("rating", ratingAll);
-            }
+        productReference.get().addOnSuccessListener(documentSnapshot -> {
+            Product product = documentSnapshot.toObject(Product.class);
+            float oldRating = product.getRating();
+            int ratingCount = product.getRatingCount();
+            float ratingAll = oldRating * ratingCount;
+            ratingAll += rating;
+            ratingAll = ratingAll / (ratingCount + 1);
+            productReference.update("ratingCount", ratingCount + 1);
+            productReference.update("rating", ratingAll);
         });
     }
 

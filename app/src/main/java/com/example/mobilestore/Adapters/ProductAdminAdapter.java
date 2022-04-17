@@ -77,13 +77,14 @@ public class ProductAdminAdapter extends FirestoreRecyclerAdapter<Product, Produ
             txtManufacturerName = itemView.findViewById(R.id.txtManufacturerName);
             itemView.setOnClickListener(view -> {
                 Context context = itemView.getContext();
-                context.startActivity(new Intent(context, ProductInfoActivity.class).putExtra("IdProduct", productInformation(getAdapterPosition())).putExtra("Role", "Admin"));
+                context.startActivity(new Intent(context, ProductInfoActivity.class).putExtra("IdProduct",
+                        (getAdapterPosition())).putExtra("Role", "Admin"));
             });
         }
 
         private void showPopupMenu(View v) {
             PopupMenu popupMenu = new PopupMenu(itemView.getContext(), v);
-            popupMenu.inflate(R.menu.popupmenu);
+            popupMenu.inflate(R.menu.popupmenu_full);
             popupMenu.setOnMenuItemClickListener(item -> {
                 switch (item.getItemId()) {
                     case R.id.update:

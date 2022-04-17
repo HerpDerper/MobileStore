@@ -89,7 +89,7 @@ public class ProductInfoActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerComments);
         bundle = getIntent().getExtras();
         IdProduct = bundle.getString("IdProduct");
-        if(bundle.getString("Role")!=null){
+        if (bundle.getString("Role") != null) {
             btnBuy.setVisibility(View.GONE);
             btnAddToCart.setVisibility(View.GONE);
             role = bundle.getString("Role");
@@ -100,9 +100,10 @@ public class ProductInfoActivity extends AppCompatActivity {
     }
 
     public void addCommentClick(View view) {
-        if(role!=null)
-            startActivity( new Intent(this, AddCommentActivity.class).putExtra("IdProduct", IdProduct).putExtra("Role", role));
-        else  startActivity( new Intent(this, AddCommentActivity.class).putExtra("IdProduct", IdProduct));
+        if (role != null)
+            startActivity(new Intent(this, AddCommentActivity.class).putExtra("IdProduct", IdProduct).putExtra("Role", role));
+        else
+            startActivity(new Intent(this, AddCommentActivity.class).putExtra("IdProduct", IdProduct));
         finish();
     }
 
@@ -195,7 +196,7 @@ public class ProductInfoActivity extends AppCompatActivity {
                 ratingAll = 0;
             }
             productReference.update("rating", ratingAll);
-            txtRating.setText(ratingAll + " (" + ratingCountNew + " оценок)");
+            txtRating.setText(String.format("%.1f", product.getRating()) + " (" + product.getRatingCount() + " оценок)");
             rtnRating.setRating(ratingAll);
         });
     }

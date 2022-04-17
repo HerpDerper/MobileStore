@@ -56,13 +56,13 @@ public class CategoryAdapter extends FirestoreRecyclerAdapter<Category, Category
 
         private void showPopupMenu(View v) {
             PopupMenu popupMenu = new PopupMenu(itemView.getContext(), v);
-            popupMenu.inflate(R.menu.popupmenu);
+            popupMenu.inflate(R.menu.popupmenu_full);
             popupMenu.setOnMenuItemClickListener(item -> {
                 switch (item.getItemId()) {
-                    case R.id.update:
+                    case R.id.mnUpdate:
 
                         return true;
-                    case R.id.delete:
+                    case R.id.mnDelete:
                         deleteItem(getAdapterPosition());
                         return true;
                     default:
