@@ -125,7 +125,6 @@ public class ProductAddUpdateActivity extends AppCompatActivity {
     }
 
     private void insertProduct() {
-
         DocumentReference productReference = firebaseFirestore.collection("Products").document();
         Product product = new Product(txtProductName.getText().toString().trim(), spnCategoryName.getSelectedItem().toString(),
                 txtDescription.getText().toString().trim(), txtGuarantee.getText().toString().trim(),

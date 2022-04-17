@@ -1,7 +1,5 @@
 package com.example.mobilestore.Adapters;
 
-import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.mobilestore.Activities.ProductAddUpdateActivity;
 import com.example.mobilestore.Models.Category;
+import com.example.mobilestore.Models.Product;
 import com.example.mobilestore.R;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -32,7 +30,7 @@ public class CategoryAdapter extends FirestoreRecyclerAdapter<Category, Category
 
     @Override
     protected void onBindViewHolder(@NonNull CategoryAdapter.CategoryHolder holder, int position, @NonNull Category model) {
-        holder.txtCategoryName.setText(model.getCategoryName());
+        holder.txtCategoryName.setText(  model.getCategoryName());
     }
 
     public String categoryInformation(int position) {
@@ -72,7 +70,7 @@ public class CategoryAdapter extends FirestoreRecyclerAdapter<Category, Category
 
                         return true;
                     case R.id.mnDelete:
-                        deleteProducts(categoryInformation(getAdapterPosition()));
+                        deleteProducts(txtCategoryName.getText().toString());
                         deleteItem(getAdapterPosition());
                         return true;
                     default:
@@ -89,10 +87,10 @@ public class CategoryAdapter extends FirestoreRecyclerAdapter<Category, Category
         query.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 for (QueryDocumentSnapshot document : task.getResult()) {
-                    DocumentReference commentReference = firebaseFirestore.collection("Products").document(document.getId());
+                    DocumentReference productReference = firebaseFirestore.collection("Products").document(document.getId());
                     deleteComments(document.getId());
                     deleteCarts(document.getId());
-                    commentReference.delete();
+                    productReference.delete();
                 }
             }
         });
@@ -118,9 +116,8 @@ public class CategoryAdapter extends FirestoreRecyclerAdapter<Category, Category
         query.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 for (QueryDocumentSnapshot document : task.getResult()) {
-                    DocumentReference commentReference = firebaseFirestore.collection("Carts").document(document.getId());
-                    deleteCommentLikes(document.getId());
-                    commentReference.delete();
+                    DocumentReference cartReference = firebaseFirestore.collection("Carts").document(document.getId());
+                    cartReference.delete();
                 }
             }
         });
@@ -132,8 +129,8 @@ public class CategoryAdapter extends FirestoreRecyclerAdapter<Category, Category
         query.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 for (QueryDocumentSnapshot document : task.getResult()) {
-                    DocumentReference commentReference = firebaseFirestore.collection("CommentLikes").document(document.getId());
-                    commentReference.delete();
+                    DocumentReference commentLikeReference = firebaseFirestore.collection("CommentLikes").document(document.getId());
+                    commentLikeReference.delete();
                 }
             }
         });

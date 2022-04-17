@@ -124,9 +124,8 @@ public class ProductAdminAdapter extends FirestoreRecyclerAdapter<Product, Produ
         query.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 for (QueryDocumentSnapshot document : task.getResult()) {
-                    DocumentReference commentReference = firebaseFirestore.collection("Carts").document(document.getId());
-                    deleteCommentLikes(document.getId());
-                    commentReference.delete();
+                    DocumentReference cartReference = firebaseFirestore.collection("Carts").document(document.getId());
+                    cartReference.delete();
                 }
             }
         });
@@ -138,8 +137,8 @@ public class ProductAdminAdapter extends FirestoreRecyclerAdapter<Product, Produ
         query.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 for (QueryDocumentSnapshot document : task.getResult()) {
-                    DocumentReference commentReference = firebaseFirestore.collection("CommentLikes").document(document.getId());
-                    commentReference.delete();
+                    DocumentReference commentLikeReference = firebaseFirestore.collection("CommentLikes").document(document.getId());
+                    commentLikeReference.delete();
                 }
             }
         });
