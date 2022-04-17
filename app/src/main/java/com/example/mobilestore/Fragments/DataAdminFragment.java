@@ -8,17 +8,24 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mobilestore.Adapters.CartAdminAdapter;
+import com.example.mobilestore.Adapters.CartUserAdapter;
+import com.example.mobilestore.Adapters.CategoryAdapter;
 import com.example.mobilestore.Adapters.ProductAdminAdapter;
+import com.example.mobilestore.Adapters.UserAdapter;
+import com.example.mobilestore.Models.Cart;
+import com.example.mobilestore.Models.Category;
 import com.example.mobilestore.Models.Product;
 import com.example.mobilestore.Activities.ProductAddUpdateActivity;
+import com.example.mobilestore.Models.User;
 import com.example.mobilestore.R;
 import com.example.mobilestore.databinding.FragmentDataAdminBinding;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -32,7 +39,11 @@ public class DataAdminFragment extends Fragment {
     private FragmentDataAdminBinding binding;
     private FloatingActionButton btnAddData;
     private RecyclerView recyclerView;
-    private ProductAdminAdapter adapter;
+    private UserAdapter adapterUser;
+    private ProductAdminAdapter adapterProduct;
+    private CategoryAdapter adapterCategory;
+    private CartAdminAdapter adapterCart;
+    private String adapterName = "Users";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -46,8 +57,12 @@ public class DataAdminFragment extends Fragment {
                 startActivity(new Intent(getActivity().getApplicationContext(), ProductAddUpdateActivity.class));
             }
         });
-        setRecyclerView();
-        adapter.startListening();
+        setAdapters();
+        setRecyclerView(adapterName);
+        adapterUser.startListening();
+        adapterProduct.startListening();
+        adapterCategory.startListening();
+        adapterCart.startListening();
         return root;
     }
 
@@ -58,25 +73,97 @@ public class DataAdminFragment extends Fragment {
     }
 
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_admin, menu);
+        inflater.inflate(R.menu.optionsmenu_admin, menu);
         super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.mnCarts: {
+                adapterName = "Carts";
+                break;
+            }
+            case R.id.mnCategories: {
+                adapterName = "Categories";
+                break;
+            }
+            case R.id.mnComments: {
+                adapterName = "Comments";
+                break;
+            }
+            case R.id.mnManufacturers: {
+                adapterName = "Manufacturers";
+                break;
+            }
+            case R.id.mnProducts: {
+                adapterName = "Products";
+                break;
+            }
+            case R.id.mnUsers: {
+                adapterName = "Users";
+                break;
+            }
+        }
+        setRecyclerView(adapterName);
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
-        adapter.stopListening();
+        adapterUser.stopListening();
+        adapterProduct.stopListening();
+        adapterCategory.stopListening();
+        adapterCart.stopListening();
     }
 
-    private void setRecyclerView() {
-        Query query = firebaseFirestore.collection("Products");
-        FirestoreRecyclerOptions<Product> options = new FirestoreRecyclerOptions.Builder<Product>()
+    private void setAdapters(){
+        Query query = firebaseFirestore.collection("Users");
+        FirestoreRecyclerOptions<User> optionsUser = new FirestoreRecyclerOptions.Builder<User>()
+                .setQuery(query, User.class)
+                .build();
+        query = firebaseFirestore.collection("Products");
+        FirestoreRecyclerOptions<Product> optionsProduct = new FirestoreRecyclerOptions.Builder<Product>()
                 .setQuery(query, Product.class)
                 .build();
-        adapter = new ProductAdminAdapter(options);
+        query = firebaseFirestore.collection("Categories");
+        FirestoreRecyclerOptions<Category> optionsCategory = new FirestoreRecyclerOptions.Builder<Category>()
+                .setQuery(query, Category.class)
+                .build();
+        query = firebaseFirestore.collection("Carts");
+        FirestoreRecyclerOptions<Cart> options = new FirestoreRecyclerOptions.Builder<Cart>()
+                .setQuery(query, Cart.class)
+                .build();
+
+        adapterUser = new UserAdapter(optionsUser);
+        adapterProduct = new ProductAdminAdapter(optionsProduct);
+        adapterCategory = new CategoryAdapter(optionsCategory);
+        adapterCart = new CartAdminAdapter(options);
+
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), LinearLayoutManager.VERTICAL, false));
-        recyclerView.setAdapter(adapter);
+    }
+
+    private void setRecyclerView(String name) {
+        switch (name) {
+            case "Users": {
+                recyclerView.setAdapter(adapterUser);
+                break;
+            }
+            case "Products": {
+                recyclerView.setAdapter(adapterProduct);
+                break;
+            }
+            case "Categories": {
+                recyclerView.setAdapter(adapterCategory);
+                break;
+            }
+            case "Carts": {
+                recyclerView.setAdapter(adapterCart);
+                break;
+            }
+        }
     }
 }

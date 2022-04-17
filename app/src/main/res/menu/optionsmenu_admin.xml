@@ -18,6 +18,10 @@
         android:title="Производители"/>
 
     <item
+        android:id="@+id/mnUsers"
+        android:title="Пользователи"/>
+
+    <item
         android:id="@+id/mnProducts"
         android:title="Товары"/>
 

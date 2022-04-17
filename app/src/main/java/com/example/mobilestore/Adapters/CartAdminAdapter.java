@@ -1,7 +1,5 @@
 package com.example.mobilestore.Adapters;
 
-import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,16 +11,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.mobilestore.Activities.ProductInfoActivity;
 import com.example.mobilestore.Models.Cart;
 import com.example.mobilestore.Models.Product;
 import com.example.mobilestore.Models.User;
 import com.example.mobilestore.R;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
@@ -41,7 +36,7 @@ public class CartAdminAdapter extends FirestoreRecyclerAdapter<Cart, CartAdminAd
         DocumentReference productReference = firebaseFirestore.collection("Products").document(model.getProductName());
         productReference.get().addOnSuccessListener(documentSnapshot -> {
             Product product = documentSnapshot.toObject(Product.class);
-            holder.txtPrice.setText(product.getPrice() + "₽");
+            holder.txtPrice.setText(String.valueOf(product.getPrice()) + "₽");
             holder.txtProductCount.setText(String.valueOf(model.getProductCount()));
             holder.txtProductName.setText(product.getProductName());
             holder.txtExtraInfo.setText(product.getCategoryName() + " " + product.getManufacturerName());
@@ -58,10 +53,6 @@ public class CartAdminAdapter extends FirestoreRecyclerAdapter<Cart, CartAdminAd
                     .load(user.getAvatar())
                     .into(holder.imgAvatar);
         });
-    }
-
-    public String cartInformation(int position) {
-        return getSnapshots().getSnapshot(position).getReference().getId();
     }
 
     public void deleteItem(int position) {

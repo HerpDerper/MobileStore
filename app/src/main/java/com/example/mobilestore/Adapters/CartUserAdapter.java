@@ -37,7 +37,7 @@ public class CartUserAdapter extends FirestoreRecyclerAdapter<Cart, CartUserAdap
         productReference.get().addOnSuccessListener(documentSnapshot -> {
             Product product = documentSnapshot.toObject(Product.class);
             productCount = product.getProductCount();
-            holder.txtPrice.setText(product.getPrice() + "₽");
+            holder.txtPrice.setText(String.valueOf(product.getPrice()) + "₽");
             holder.txtProductCount.setText(String.valueOf(model.getProductCount()));
             holder.txtProductName.setText(product.getProductName());
             holder.txtExtraInfo.setText(product.getCategoryName() + " " + product.getManufacturerName());
