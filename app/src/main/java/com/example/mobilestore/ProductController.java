@@ -2,6 +2,7 @@ package com.example.mobilestore;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
@@ -38,29 +39,27 @@ public class ProductController {
     private EditText txtProductName, txtDescription, txtGuarantee, txtPrice, txtProductCount;
     private Spinner spnManufacturerName, spnCategoryName;
     public ImageView imgProductImage;
-    private final View viewProduct;
+    private View productView;
     private final Activity activityProduct;
     Uri imageUri;
     private int ratingCount;
     private float rating;
     private String manufacturerName;
     private String categoryName;
-    public String id;
 
-    public ProductController(View viewProduct, Activity activityProduct) {
-        this.viewProduct = viewProduct;
+    public ProductController( Activity activityProduct) {
         this.activityProduct = activityProduct;
     }
 
     public void initialize() {
-        txtProductName = viewProduct.findViewById(R.id.txtProductName);
-        txtDescription = viewProduct.findViewById(R.id.txtDescription);
-        txtGuarantee = viewProduct.findViewById(R.id.txtGuarantee);
-        txtPrice = viewProduct.findViewById(R.id.txtPrice);
-        txtProductCount = viewProduct.findViewById(R.id.txtProductCount);
-        spnManufacturerName = viewProduct.findViewById(R.id.spnManufacturerName);
-        spnCategoryName = viewProduct.findViewById(R.id.spnCategoryName);
-        imgProductImage = viewProduct.findViewById(R.id.imgProductImage);
+        txtProductName = productView.findViewById(R.id.txtProductName);
+        txtDescription = productView.findViewById(R.id.txtDescription);
+        txtGuarantee = productView.findViewById(R.id.txtGuarantee);
+        txtPrice = productView.findViewById(R.id.txtPrice);
+        txtProductCount = productView.findViewById(R.id.txtProductCount);
+        spnManufacturerName = productView.findViewById(R.id.spnManufacturerName);
+        spnCategoryName = productView.findViewById(R.id.spnCategoryName);
+        imgProductImage = productView.findViewById(R.id.imgProductImage);
         setManufacturerData();
         setCategoryData();
     }
@@ -137,68 +136,9 @@ public class ProductController {
         productReference.set(product);
     }
 
-    public void uploadImage(String id) {
-        if (TextUtils.isEmpty(txtProductName.getText())) {
-            Toast.makeText(activityProduct, "Не введено название", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (TextUtils.isEmpty(txtProductCount.getText())) {
-            Toast.makeText(activityProduct, "Не введено количество", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (TextUtils.isEmpty(txtPrice.getText())) {
-            Toast.makeText(activityProduct, "Не введена цена", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (TextUtils.isEmpty(txtGuarantee.getText())) {
-            Toast.makeText(activityProduct, "Не введена гарантия", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (TextUtils.isEmpty(txtDescription.getText())) {
-            Toast.makeText(activityProduct, "Не введено описание", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        Bitmap bitmap = ((BitmapDrawable) imgProductImage.getDrawable()).getBitmap();
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-        byte[] data = byteArrayOutputStream.toByteArray();
-        final StorageReference reference = storageReference.child(((BitmapDrawable) imgProductImage.getDrawable()).getBitmap().toString().split("@")[1] + "_image");
-        UploadTask uploadTask = reference.putBytes(data);
-        Task<Uri> task = uploadTask.continueWithTask(task2 -> reference.getDownloadUrl()).addOnCompleteListener(task1 -> {
-            imageUri = task1.getResult();
-            updateProduct(id);
-        });
-    }
 
-    private void updateProduct(String id) {
-        manufacturerName = spnManufacturerName.getSelectedItem().toString();
-        categoryName = spnCategoryName.getSelectedItem().toString();
-        DocumentReference productReference = firebaseFirestore.collection("Products").document(id);
-        Product product = new Product(txtProductName.getText().toString().trim(), categoryName,
-                txtDescription.getText().toString().trim(), txtGuarantee.getText().toString().trim(),
-                manufacturerName, imageUri.toString(),
-                Integer.parseInt(txtProductCount.getText().toString().trim()), ratingCount, rating, Float.parseFloat(txtPrice.getText().toString().trim()));
-        productReference.set(product);
-    }
 
-    public void setData(String id) {
-        DocumentReference productReference = firebaseFirestore.collection("Products").document(id);
-        productReference.get().addOnSuccessListener(documentSnapshot -> {
-            Product product = documentSnapshot.toObject(Product.class);
-            txtDescription.setText(product.getDescription());
-            txtGuarantee.setText(product.getGuarantee());
-            txtPrice.setText(String.valueOf(product.getPrice()));
-            txtProductCount.setText(String.valueOf(product.getProductCount()));
-            txtProductName.setText(product.getProductName());
-            rating = product.getRating();
-            ratingCount = product.getRatingCount();
-            Picasso.get()
-                    .load(product.getProductImage())
-                    .resize(90, 90)
-                    .into(imgProductImage);
-            manufacturerName = product.getManufacturerName();
-            categoryName = product.getCategoryName();
-            this.id = id;
-        });
-    }
+
+
+
 }

@@ -1,7 +1,6 @@
 package com.example.mobilestore.Adapters;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -17,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mobilestore.Activities.ProductInfoActivity;
 import com.example.mobilestore.Models.Product;
-import com.example.mobilestore.ProductController;
+import com.example.mobilestore.Activities.ProductAddUpdateActivity;
 import com.example.mobilestore.R;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -25,8 +24,6 @@ import com.squareup.picasso.Picasso;
 
 public class ProductAdminAdapter extends FirestoreRecyclerAdapter<Product, ProductAdminAdapter.ProductAdminHolder> {
 
-    View productView;
-    ProductController productController;
     Activity activity;
 
     public ProductAdminAdapter(@NonNull FirestoreRecyclerOptions<Product> options, Activity activity) {
@@ -89,9 +86,8 @@ public class ProductAdminAdapter extends FirestoreRecyclerAdapter<Product, Produ
             popupMenu.setOnMenuItemClickListener(item -> {
                 switch (item.getItemId()) {
                     case R.id.update:
-                        setDialog();
-                        productController.setData(productInformation(getAdapterPosition()));
-                        showDialog();
+                        Context context = itemView.getContext();
+                        context.startActivity(new Intent(context, ProductAddUpdateActivity.class).putExtra("IdProduct", productInformation(getAdapterPosition())));
                         return true;
                     case R.id.delete:
                         deleteItem(getAdapterPosition());
@@ -102,22 +98,5 @@ public class ProductAdminAdapter extends FirestoreRecyclerAdapter<Product, Produ
             });
             popupMenu.show();
         }
-    }
-
-    private void showDialog(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-        builder.setView(productView).setTitle("Изменить товар");
-        builder.setPositiveButton("Изменить", (dialogInterface, i) -> {
-            productController.uploadImage(productController.id);
-        })
-                .setNegativeButton("Отмена", (dialogInterface, i) -> dialogInterface.cancel());
-        AlertDialog dialog = builder.create();
-        dialog.show();
-    }
-
-    private void setDialog() {
-        productView = activity.getLayoutInflater().inflate(R.layout.product_view, null);
-        productController = new ProductController(productView, activity);
-        productController.initialize();
     }
 }

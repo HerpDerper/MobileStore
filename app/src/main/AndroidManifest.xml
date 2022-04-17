@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MobileStore">
         <activity
+            android:name=".Activities.ProductAddUpdateActivity"
+            android:exported="true" />
+        <activity
             android:name=".Activities.UpdateUserInfoActivity"
             android:exported="true"
             android:parentActivityName=".Activities.MainActivity" />

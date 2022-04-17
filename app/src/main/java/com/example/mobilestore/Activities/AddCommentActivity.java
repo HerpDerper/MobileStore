@@ -57,12 +57,10 @@ public class AddCommentActivity extends AppCompatActivity {
         float rating = rtnRating.getRating();
         updateProduct(rating);
         addComment(rating);
-        startActivity(new Intent(AddCommentActivity.this, ProductInfoActivity.class).putExtra("IdProduct", IdProduct));
         finish();
     }
 
     public void cancelCommentClick(View view) {
-        startActivity(new Intent(AddCommentActivity.this, ProductInfoActivity.class).putExtra("IdProduct", IdProduct));
         finish();
     }
 

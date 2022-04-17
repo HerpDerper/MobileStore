@@ -16,6 +16,7 @@
             android:layout_height="100dp"
             android:layout_marginTop="5sp"
             android:src="@mipmap/ic_icon"
+            android:onClick="setImageClick"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -75,6 +76,33 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/spnManufacturerName"
             android:layout_marginTop="10sp"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnProductAddUpdate"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/styles"
+            android:gravity="center"
+            android:text="Добавить"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spnCategoryName"
+            android:layout_marginTop="10sp"
+            android:onClick="productAddUpdateClick"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnCancel"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/styles"
+            android:gravity="center"
+            android:text="Назад"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnProductAddUpdate"
+            android:layout_marginTop="10sp"
+            android:onClick="cancelClick"/>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

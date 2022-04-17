@@ -94,7 +94,6 @@ public class ProductInfoActivity extends AppCompatActivity {
 
     public void addCommentClick(View view) {
         startActivity(new Intent(this, AddCommentActivity.class).putExtra("IdProduct", IdProduct));
-        finish();
     }
 
     public void deleteCommentClick(View view) {
