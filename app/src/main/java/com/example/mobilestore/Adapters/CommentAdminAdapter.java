@@ -49,7 +49,7 @@ public class CommentAdminAdapter extends FirestoreRecyclerAdapter<Comment, Comme
     @NonNull
     @Override
     public CommentAdminHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_item_comment_user,
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_item_comment_admin,
                 parent, false);
         return new CommentAdminHolder(view);
     }
@@ -82,13 +82,9 @@ public class CommentAdminAdapter extends FirestoreRecyclerAdapter<Comment, Comme
 
         private void showPopupMenu(View v) {
             PopupMenu popupMenu = new PopupMenu(itemView.getContext(), v);
-            popupMenu.inflate(R.menu.popupmenu_full);
+            popupMenu.inflate(R.menu.popupmenu_delete);
             popupMenu.setOnMenuItemClickListener(item -> {
                 switch (item.getItemId()) {
-                    case R.id.mnUpdate:
-                        Context context = itemView.getContext();
-
-                        return true;
                     case R.id.mnDelete:
                         deleteCommentLikes(commentInformation(getAdapterPosition()));
                         deleteItem(getAdapterPosition());
