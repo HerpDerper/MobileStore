@@ -82,9 +82,7 @@ public class UpdateCurrentUserInfoActivity extends AppCompatActivity {
         txtDateOfBirth = findViewById(R.id.txtDateOfBirth);
         btnChangeInformation = findViewById(R.id.btnChangeInformation);
         bundle = getIntent().getExtras();
-        if(bundle.getString("IdUser")!=null){
-            IdUser = bundle.getString("IdUser");
-        }
+        IdUser = bundle.getString("IdUser");
     }
 
     private void setData() {

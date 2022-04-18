@@ -53,16 +53,16 @@ public class LogInActivity extends AppCompatActivity {
                         DocumentReference userReference = firebaseFirestore.collection("Users").document(firebaseAuth.getCurrentUser().getUid());
                         userReference.get().addOnSuccessListener(documentSnapshot -> {
                             switch (documentSnapshot.getString("roleName")) {
-                                case "User":
+                                case "Пользователь":
                                     startActivity(new Intent(LogInActivity.this, MainActivity.class));
                                     finish();
                                     break;
-                                case "Admin":
+                                case "Администратор":
                                     startActivity(new Intent(LogInActivity.this, MainAdminActivity.class));
                                     finish();
                                     break;
-                                case "Seller":
-                                    Toast.makeText(LogInActivity.this, "Кря", Toast.LENGTH_SHORT).show();
+                                case "Продавец":
+                                    startActivity(new Intent(LogInActivity.this, MainSellerActivity.class));
                                     finish();
                                     break;
                             }

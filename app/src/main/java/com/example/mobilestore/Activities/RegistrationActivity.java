@@ -154,6 +154,7 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     private void uploadImage() {
+        Toast.makeText(this, "Подождите, идет регистрация", Toast.LENGTH_SHORT).show();
         Bitmap bitmap = ((BitmapDrawable) imgAvatar.getDrawable()).getBitmap();
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
@@ -182,14 +183,13 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     private void createNewUser() {
-        Toast.makeText(this, "Подождите, идет регистрация", Toast.LENGTH_SHORT).show();
         firebaseAuth.createUserWithEmailAndPassword(txtEmail.getText().toString().trim(), txtPassword.getText().toString().trim()).
                 addOnCompleteListener((task) -> {
                     if (task.isSuccessful()) {
                         DocumentReference userReference = firebaseFirestore.collection("Users").document(firebaseAuth.getCurrentUser().getUid());
                         User user = new User(
                                 txtUserSurname.getText().toString().trim(), txtUserName.getText().toString().trim(),
-                                txtEmail.getText().toString().trim().toLowerCase(Locale.ROOT), txtLogin.getText().toString(), "User",
+                                txtEmail.getText().toString().trim().toLowerCase(Locale.ROOT), txtLogin.getText().toString(), "Пользователь",
                                 txtAddress.getText().toString(), txtDateOfBirth.getText().toString(), imageUri.toString());
                         userReference.set(user);
                         Toast.makeText(this, "Вы успешно зарегистрированны", Toast.LENGTH_SHORT).show();
