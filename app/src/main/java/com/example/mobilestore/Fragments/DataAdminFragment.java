@@ -18,11 +18,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.mobilestore.Adapters.CartAdminAdapter;
 import com.example.mobilestore.Adapters.CategoryAdapter;
 import com.example.mobilestore.Adapters.CommentAdminAdapter;
+import com.example.mobilestore.Adapters.ManufacturerAdapter;
 import com.example.mobilestore.Adapters.ProductAdminAdapter;
 import com.example.mobilestore.Adapters.UserAdapter;
 import com.example.mobilestore.Models.Cart;
 import com.example.mobilestore.Models.Category;
 import com.example.mobilestore.Models.Comment;
+import com.example.mobilestore.Models.Manufacturer;
 import com.example.mobilestore.Models.Product;
 import com.example.mobilestore.Activities.ProductAddUpdateActivity;
 import com.example.mobilestore.Models.User;
@@ -44,6 +46,7 @@ public class DataAdminFragment extends Fragment {
     private CategoryAdapter adapterCategory;
     private CartAdminAdapter adapterCart;
     private CommentAdminAdapter adapterComment;
+    private ManufacturerAdapter adapterManufacturer;
     private String adapterName = "Users";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -65,6 +68,7 @@ public class DataAdminFragment extends Fragment {
         adapterCategory.startListening();
         adapterCart.startListening();
         adapterComment.startListening();
+        adapterManufacturer.startListening();
         return root;
     }
 
@@ -120,6 +124,7 @@ public class DataAdminFragment extends Fragment {
         adapterCategory.stopListening();
         adapterCart.stopListening();
         adapterComment.stopListening();
+        adapterManufacturer.stopListening();
     }
 
     private void setAdapters() {
@@ -143,12 +148,17 @@ public class DataAdminFragment extends Fragment {
         FirestoreRecyclerOptions<Comment> optionsComment = new FirestoreRecyclerOptions.Builder<Comment>()
                 .setQuery(query, Comment.class)
                 .build();
+        query = firebaseFirestore.collection("Manufacturers");
+        FirestoreRecyclerOptions<Manufacturer> optionsManufacturer = new FirestoreRecyclerOptions.Builder<Manufacturer>()
+                .setQuery(query, Manufacturer.class)
+                .build();
 
         adapterUser = new UserAdapter(optionsUser);
         adapterProduct = new ProductAdminAdapter(optionsProduct);
         adapterCategory = new CategoryAdapter(optionsCategory);
         adapterCart = new CartAdminAdapter(optionsCart);
         adapterComment = new CommentAdminAdapter(optionsComment);
+        adapterManufacturer = new ManufacturerAdapter(optionsManufacturer);
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), LinearLayoutManager.VERTICAL, false));
@@ -177,7 +187,7 @@ public class DataAdminFragment extends Fragment {
                 break;
             }
             case "Manufacturers": {
-                recyclerView.setAdapter(adapterCart);
+                recyclerView.setAdapter(adapterManufacturer);
                 break;
             }
         }

@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.mobilestore.Models.Category;
+import com.example.mobilestore.Models.Manufacturer;
 import com.example.mobilestore.R;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -19,17 +19,18 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
-public class CategoryAdapter extends FirestoreRecyclerAdapter<Category, CategoryAdapter.CategoryHolder> {
+public class ManufacturerAdapter extends FirestoreRecyclerAdapter<Manufacturer, ManufacturerAdapter.ManufacturerHolder> {
 
     private final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
 
-    public CategoryAdapter(@NonNull FirestoreRecyclerOptions<Category> options) {
+    public ManufacturerAdapter(@NonNull FirestoreRecyclerOptions<Manufacturer> options) {
         super(options);
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull CategoryAdapter.CategoryHolder holder, int position, @NonNull Category model) {
-        holder.txtCategoryName.setText(  model.getCategoryName());
+    protected void onBindViewHolder(@NonNull ManufacturerAdapter.ManufacturerHolder holder, int position, @NonNull Manufacturer model) {
+        holder.txtManufacturerName.setText(model.getManufacturerName());
+        holder.txtAddress.setText(model.getAddress());
     }
 
     public void deleteItem(int position) {
@@ -38,20 +39,21 @@ public class CategoryAdapter extends FirestoreRecyclerAdapter<Category, Category
 
     @NonNull
     @Override
-    public CategoryAdapter.CategoryHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_item_category,
+    public ManufacturerAdapter.ManufacturerHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_item_manufacturer,
                 parent, false);
-        return new CategoryAdapter.CategoryHolder(view);
+        return new ManufacturerAdapter.ManufacturerHolder(view);
     }
 
-    class CategoryHolder extends RecyclerView.ViewHolder {
+    class ManufacturerHolder extends RecyclerView.ViewHolder {
 
-        TextView txtCategoryName;
+        TextView txtManufacturerName, txtAddress;
         Button btnMore;
 
-        public CategoryHolder(View itemView) {
+        public ManufacturerHolder(View itemView) {
             super(itemView);
-            txtCategoryName = itemView.findViewById(R.id.txtCategoryName);
+            txtManufacturerName = itemView.findViewById(R.id.txtManufacturerName);
+            txtAddress = itemView.findViewById(R.id.txtAddress);
             btnMore = itemView.findViewById(R.id.btnMore);
             btnMore.setOnClickListener(this::showPopupMenu);
         }
@@ -65,7 +67,7 @@ public class CategoryAdapter extends FirestoreRecyclerAdapter<Category, Category
 
                         return true;
                     case R.id.mnDelete:
-                        deleteProducts(txtCategoryName.getText().toString());
+                        deleteProducts(txtManufacturerName.getText().toString());
                         deleteItem(getAdapterPosition());
                         return true;
                     default:
@@ -78,7 +80,7 @@ public class CategoryAdapter extends FirestoreRecyclerAdapter<Category, Category
 
     private void deleteProducts(String id) {
         Query query = firebaseFirestore.collection("Products")
-                .whereEqualTo("categoryName", id);
+                .whereEqualTo("manufacturerName", id);
         query.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 for (QueryDocumentSnapshot document : task.getResult()) {
