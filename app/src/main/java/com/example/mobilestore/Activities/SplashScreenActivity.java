@@ -27,15 +27,15 @@ public class SplashScreenActivity extends AppCompatActivity {
             DocumentReference userReference = firebaseFirestore.collection("Users").document(currentUser.getUid());
             userReference.get().addOnSuccessListener(documentSnapshot -> {
                 switch (documentSnapshot.getString("roleName")) {
-                    case "User":
+                    case "Пользователь":
                         startActivity(new Intent(SplashScreenActivity.this, MainActivity.class));
                         finish();
                         break;
-                    case "Admin":
+                    case "Администратор":
                         startActivity(new Intent(SplashScreenActivity.this, MainAdminActivity.class));
                         finish();
                         break;
-                    case "Seller":
+                    case "Продавец":
                         Toast.makeText(SplashScreenActivity.this, "Кря", Toast.LENGTH_SHORT).show();
                         finish();
                         break;

@@ -12,9 +12,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.mobilestore.Activities.AddUpdateCategoryActivity;
 import com.example.mobilestore.Models.User;
 import com.example.mobilestore.R;
+import com.example.mobilestore.Activities.UpdateUserActivity;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.squareup.picasso.Picasso;
@@ -72,7 +72,7 @@ public class UserAdapter extends FirestoreRecyclerAdapter<User, UserAdapter.User
                 switch (item.getItemId()) {
                     case R.id.mnUpdate:
                         Context context = itemView.getContext();
-                        context.startActivity(new Intent(context, UpdateUserInfoActivity.class).putExtra("IdUser", userInformation(getAdapterPosition())));
+                        context.startActivity(new Intent(context, UpdateUserActivity.class).putExtra("IdUser", userInformation(getAdapterPosition())));
                         return true;
                     default:
                         return false;
