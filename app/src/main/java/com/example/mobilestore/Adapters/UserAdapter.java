@@ -1,16 +1,18 @@
 package com.example.mobilestore.Adapters;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mobilestore.Activities.AddUpdateCategoryActivity;
 import com.example.mobilestore.Models.User;
 import com.example.mobilestore.R;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -51,6 +53,7 @@ public class UserAdapter extends FirestoreRecyclerAdapter<User, UserAdapter.User
 
         TextView txtLogin, txtEmail, txtRoleName;
         CircleImageView imgAvatar;
+        Button btnMore;
 
         public UserHolder(View itemView) {
             super(itemView);
@@ -58,6 +61,24 @@ public class UserAdapter extends FirestoreRecyclerAdapter<User, UserAdapter.User
             txtEmail = itemView.findViewById(R.id.txtEmail);
             txtRoleName = itemView.findViewById(R.id.txtRoleName);
             imgAvatar = itemView.findViewById(R.id.imgAvatar);
+            btnMore = itemView.findViewById(R.id.btnMore);
+            btnMore.setOnClickListener(this::showPopupMenu);
+        }
+
+        private void showPopupMenu(View v) {
+            PopupMenu popupMenu = new PopupMenu(itemView.getContext(), v);
+            popupMenu.inflate(R.menu.popupmenu_update);
+            popupMenu.setOnMenuItemClickListener(item -> {
+                switch (item.getItemId()) {
+                    case R.id.mnUpdate:
+                        Context context = itemView.getContext();
+                        context.startActivity(new Intent(context, UpdateUserInfoActivity.class).putExtra("IdUser", userInformation(getAdapterPosition())));
+                        return true;
+                    default:
+                        return false;
+                }
+            });
+            popupMenu.show();
         }
     }
 }

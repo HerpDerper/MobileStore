@@ -19,7 +19,7 @@
             android:name=".Activities.AddUpdateProductActivity"
             android:exported="true" />
         <activity
-            android:name=".Activities.UpdateUserInfoActivity"
+            android:name=".Activities.UpdateCurrentUserInfoActivity"
             android:exported="true"
             android:parentActivityName=".Activities.MainActivity" />
         <activity

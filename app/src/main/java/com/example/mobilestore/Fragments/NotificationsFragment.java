@@ -15,7 +15,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.example.mobilestore.Activities.UpdateUserInfoActivity;
+import com.example.mobilestore.Activities.UpdateCurrentUserInfoActivity;
 import com.example.mobilestore.Activities.LogInActivity;
 import com.example.mobilestore.Models.User;
 import com.example.mobilestore.databinding.FragmentNotificationsBinding;
@@ -93,7 +93,7 @@ public class NotificationsFragment extends Fragment {
             photoPickerIntent.setType("image/*");
             startActivityForResult(photoPickerIntent, CAMERA_REQUEST);
         });
-        btnChangeInformation.setOnClickListener(view -> startActivity(new Intent(getActivity(), UpdateUserInfoActivity.class)));
+        btnChangeInformation.setOnClickListener(view -> startActivity(new Intent(getActivity(), UpdateCurrentUserInfoActivity.class)));
 
         btnDeleteAccount.setOnClickListener(view -> {
             androidx.appcompat.app.AlertDialog.Builder dialog = new androidx.appcompat.app.AlertDialog.Builder(getActivity());

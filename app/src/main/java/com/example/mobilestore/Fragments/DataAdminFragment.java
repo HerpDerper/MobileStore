@@ -120,7 +120,7 @@ public class DataAdminFragment extends Fragment {
             }
             case R.id.mnComments: {
                 adapterName = "Comments";
-                btnAddData.setVisibility(View.VISIBLE);
+                btnAddData.setVisibility(View.INVISIBLE);
                 break;
             }
             case R.id.mnManufacturers: {

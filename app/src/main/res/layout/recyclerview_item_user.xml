@@ -13,6 +13,18 @@
         android:layout_height="match_parent"
         android:padding="8dp">
 
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnMore"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="4sp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:background="@drawable/oval_button"
+            android:textColor="@color/black"
+            android:text="⋮"
+            android:textSize="20dp"/>
+
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imgAvatar"
             android:layout_width="100dp"

@@ -25,7 +25,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Calendar;
 
-public class UpdateUserInfoActivity extends AppCompatActivity {
+public class UpdateCurrentUserInfoActivity extends AppCompatActivity {
 
     private final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
     private final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -40,7 +40,7 @@ public class UpdateUserInfoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_update_user_info);
+        setContentView(R.layout.activity_update_current_user_info);
         initialize();
         setData();
         showPassword.setOnCheckedChangeListener((compoundButton, b) -> {
@@ -59,7 +59,7 @@ public class UpdateUserInfoActivity extends AppCompatActivity {
         };
         txtDateOfBirth.setOnTouchListener((view, motionEvent) -> {
             if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                new DatePickerDialog(UpdateUserInfoActivity.this, picker,
+                new DatePickerDialog(UpdateCurrentUserInfoActivity.this, picker,
                         date.get(Calendar.YEAR),
                         date.get(Calendar.MONTH),
                         date.get(Calendar.DAY_OF_MONTH)).show();
