@@ -31,7 +31,7 @@ import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductAddUpdateActivity extends AppCompatActivity {
+public class AddUpdateProductActivity extends AppCompatActivity {
 
     private final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
     private final StorageReference storageReference = FirebaseStorage.getInstance().getReference();
@@ -52,7 +52,7 @@ public class ProductAddUpdateActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_product_add_update);
+        setContentView(R.layout.activity_add_update_product);
         initialize();
         setManufacturerData();
         setCategoryData();

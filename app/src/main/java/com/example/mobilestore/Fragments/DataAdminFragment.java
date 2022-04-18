@@ -21,12 +21,13 @@ import com.example.mobilestore.Adapters.CommentAdminAdapter;
 import com.example.mobilestore.Adapters.ManufacturerAdapter;
 import com.example.mobilestore.Adapters.ProductAdminAdapter;
 import com.example.mobilestore.Adapters.UserAdapter;
+import com.example.mobilestore.Activities.AddUpdateCategoryActivity;
 import com.example.mobilestore.Models.Cart;
 import com.example.mobilestore.Models.Category;
 import com.example.mobilestore.Models.Comment;
 import com.example.mobilestore.Models.Manufacturer;
 import com.example.mobilestore.Models.Product;
-import com.example.mobilestore.Activities.ProductAddUpdateActivity;
+import com.example.mobilestore.Activities.AddUpdateProductActivity;
 import com.example.mobilestore.Models.User;
 import com.example.mobilestore.R;
 import com.example.mobilestore.databinding.FragmentDataAdminBinding;
@@ -55,10 +56,24 @@ public class DataAdminFragment extends Fragment {
         View root = binding.getRoot();
         recyclerView = binding.recyclerAll;
         btnAddData = binding.btnAddData;
-        btnAddData.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getActivity().getApplicationContext(), ProductAddUpdateActivity.class));
+        btnAddData.setOnClickListener(view -> {
+            switch (adapterName) {
+                case "Users": {
+
+                    break;
+                }
+                case "Products": {
+                    startActivity(new Intent(getActivity().getApplicationContext(), AddUpdateProductActivity.class));
+                    break;
+                }
+                case "Categories": {
+                    startActivity(new Intent(getActivity().getApplicationContext(), AddUpdateCategoryActivity.class));
+                    break;
+                }
+                case "Manufacturers": {
+
+                    break;
+                }
             }
         });
         setAdapters();
@@ -88,26 +103,32 @@ public class DataAdminFragment extends Fragment {
         switch (item.getItemId()) {
             case R.id.mnUsers: {
                 adapterName = "Users";
+                btnAddData.setVisibility(View.INVISIBLE);
                 break;
             }
             case R.id.mnProducts: {
                 adapterName = "Products";
+                btnAddData.setVisibility(View.VISIBLE);
                 break;
             }
             case R.id.mnCategories: {
                 adapterName = "Categories";
+                btnAddData.setVisibility(View.VISIBLE);
                 break;
             }
             case R.id.mnCarts: {
                 adapterName = "Carts";
+                btnAddData.setVisibility(View.INVISIBLE);
                 break;
             }
             case R.id.mnComments: {
                 adapterName = "Comments";
+                btnAddData.setVisibility(View.VISIBLE);
                 break;
             }
             case R.id.mnManufacturers: {
                 adapterName = "Manufacturers";
+                btnAddData.setVisibility(View.VISIBLE);
                 break;
             }
         }

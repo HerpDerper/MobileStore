@@ -1,5 +1,7 @@
 package com.example.mobilestore.Adapters;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mobilestore.Activities.AddUpdateCategoryActivity;
+import com.example.mobilestore.Activities.AddUpdateProductActivity;
 import com.example.mobilestore.Models.Category;
 import com.example.mobilestore.R;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -29,7 +33,11 @@ public class CategoryAdapter extends FirestoreRecyclerAdapter<Category, Category
 
     @Override
     protected void onBindViewHolder(@NonNull CategoryAdapter.CategoryHolder holder, int position, @NonNull Category model) {
-        holder.txtCategoryName.setText(  model.getCategoryName());
+        holder.txtCategoryName.setText(model.getCategoryName());
+    }
+
+    public String categoryInformation(int position) {
+        return getSnapshots().getSnapshot(position).getReference().getId();
     }
 
     public void deleteItem(int position) {
@@ -62,7 +70,8 @@ public class CategoryAdapter extends FirestoreRecyclerAdapter<Category, Category
             popupMenu.setOnMenuItemClickListener(item -> {
                 switch (item.getItemId()) {
                     case R.id.mnUpdate:
-
+                        Context context = itemView.getContext();
+                        context.startActivity(new Intent(context, AddUpdateCategoryActivity.class).putExtra("IdCategory", categoryInformation(getAdapterPosition())));
                         return true;
                     case R.id.mnDelete:
                         deleteProducts(txtCategoryName.getText().toString());

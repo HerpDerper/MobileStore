@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mobilestore.Activities.ProductInfoActivity;
 import com.example.mobilestore.Models.Product;
-import com.example.mobilestore.Activities.ProductAddUpdateActivity;
+import com.example.mobilestore.Activities.AddUpdateProductActivity;
 import com.example.mobilestore.R;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -89,7 +89,7 @@ public class ProductAdminAdapter extends FirestoreRecyclerAdapter<Product, Produ
                 switch (item.getItemId()) {
                     case R.id.mnUpdate:
                         Context context = itemView.getContext();
-                        context.startActivity(new Intent(context, ProductAddUpdateActivity.class).putExtra("IdProduct", productInformation(getAdapterPosition())));
+                        context.startActivity(new Intent(context, AddUpdateProductActivity.class).putExtra("IdProduct", productInformation(getAdapterPosition())));
                         return true;
                     case R.id.mnDelete:
                         deleteCarts(productInformation(getAdapterPosition()));
