@@ -137,15 +137,18 @@ public class NotificationsFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == CAMERA_REQUEST) {
-            imageUri = data.getData();
-            performCrop();
-        } else if (requestCode == PIC_CROP) {
-            Bundle extras = data.getExtras();
-            Bitmap thePic = extras.getParcelable("data");
-            CircleImageView picView = (CircleImageView) binding.imgAvatar;
-            picView.setImageBitmap(thePic);
-            uploadImage();
+        try {
+            if (requestCode == CAMERA_REQUEST) {
+                imageUri = data.getData();
+                performCrop();
+            } else if (requestCode == PIC_CROP) {
+                Bundle extras = data.getExtras();
+                Bitmap thePic = extras.getParcelable("data");
+                CircleImageView picView = (CircleImageView) binding.imgAvatar;
+                picView.setImageBitmap(thePic);
+                uploadImage();
+            }
+        } catch (Exception exception) {
         }
     }
 

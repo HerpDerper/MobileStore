@@ -24,9 +24,15 @@
         tools:layout="@layout/fragment_notifications" />
 
     <fragment
-        android:id="@+id/navigation_data"
+        android:id="@+id/navigation_data_admin"
         android:name="com.example.mobilestore.Fragments.DataAdminFragment"
         android:label="@string/title_data"
         tools:layout="@layout/fragment_data_admin" />
+
+    <fragment
+        android:id="@+id/navigation_data_seller"
+        android:name="com.example.mobilestore.Fragments.DataSellerFragment"
+        android:label="@string/title_data"
+        tools:layout="@layout/fragment_data_seller" />
 
 </navigation>

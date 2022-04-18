@@ -18,20 +18,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.mobilestore.Activities.AddUpdateCategoryActivity;
 import com.example.mobilestore.Activities.AddUpdateManufacturerActivity;
 import com.example.mobilestore.Activities.AddUpdateProductActivity;
-import com.example.mobilestore.Adapters.CartAdminAdapter;
 import com.example.mobilestore.Adapters.CategoryAdapter;
-import com.example.mobilestore.Adapters.CommentAdminAdapter;
 import com.example.mobilestore.Adapters.ManufacturerAdapter;
 import com.example.mobilestore.Adapters.ProductAdminAdapter;
-import com.example.mobilestore.Adapters.UserAdapter;
-import com.example.mobilestore.Models.Cart;
 import com.example.mobilestore.Models.Category;
-import com.example.mobilestore.Models.Comment;
 import com.example.mobilestore.Models.Manufacturer;
 import com.example.mobilestore.Models.Product;
-import com.example.mobilestore.Models.User;
 import com.example.mobilestore.R;
-import com.example.mobilestore.databinding.FragmentDataAdminBinding;
 import com.example.mobilestore.databinding.FragmentDataSellerBinding;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -95,17 +88,14 @@ public class DataSellerFragment extends Fragment {
         switch (item.getItemId()) {
             case R.id.mnProducts: {
                 adapterName = "Products";
-                btnAddData.setVisibility(View.VISIBLE);
                 break;
             }
             case R.id.mnCategories: {
                 adapterName = "Categories";
-                btnAddData.setVisibility(View.VISIBLE);
                 break;
             }
             case R.id.mnManufacturers: {
                 adapterName = "Manufacturers";
-                btnAddData.setVisibility(View.VISIBLE);
                 break;
             }
         }
@@ -146,7 +136,6 @@ public class DataSellerFragment extends Fragment {
 
     private void setRecyclerView(String adapterName) {
         switch (adapterName) {
-
             case "Products": {
                 recyclerView.setAdapter(adapterProduct);
                 break;

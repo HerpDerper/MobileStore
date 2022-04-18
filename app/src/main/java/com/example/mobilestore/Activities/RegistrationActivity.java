@@ -137,16 +137,19 @@ public class RegistrationActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            if (requestCode == CAMERA_REQUEST) {
-                imageUri = data.getData();
-                performCrop();
-            } else if (requestCode == PIC_CROP) {
-                Bundle extras = data.getExtras();
-                Bitmap thePic = extras.getParcelable("data");
-                ImageView picView = (ImageView) findViewById(R.id.imgAvatar);
-                picView.setImageBitmap(thePic);
+        try {
+            if (resultCode == RESULT_OK) {
+                if (requestCode == CAMERA_REQUEST) {
+                    imageUri = data.getData();
+                    performCrop();
+                } else if (requestCode == PIC_CROP) {
+                    Bundle extras = data.getExtras();
+                    Bitmap thePic = extras.getParcelable("data");
+                    ImageView picView = (ImageView) findViewById(R.id.imgAvatar);
+                    picView.setImageBitmap(thePic);
+                }
             }
+        } catch (Exception exception) {
         }
     }
 

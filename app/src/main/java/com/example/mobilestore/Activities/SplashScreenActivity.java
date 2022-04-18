@@ -3,7 +3,6 @@ package com.example.mobilestore.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -36,7 +35,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                         finish();
                         break;
                     case "Продавец":
-                        Toast.makeText(SplashScreenActivity.this, "Кря", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(SplashScreenActivity.this, MainSellerActivity.class));
                         finish();
                         break;
                 }
