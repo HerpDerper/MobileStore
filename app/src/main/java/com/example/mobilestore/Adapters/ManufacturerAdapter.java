@@ -1,5 +1,7 @@
 package com.example.mobilestore.Adapters;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mobilestore.Activities.AddUpdateCategoryActivity;
+import com.example.mobilestore.Activities.AddUpdateManufacturerActivity;
 import com.example.mobilestore.Models.Manufacturer;
 import com.example.mobilestore.R;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -31,6 +35,10 @@ public class ManufacturerAdapter extends FirestoreRecyclerAdapter<Manufacturer, 
     protected void onBindViewHolder(@NonNull ManufacturerAdapter.ManufacturerHolder holder, int position, @NonNull Manufacturer model) {
         holder.txtManufacturerName.setText(model.getManufacturerName());
         holder.txtAddress.setText(model.getAddress());
+    }
+
+    public String manufacturerInformation(int position) {
+        return getSnapshots().getSnapshot(position).getReference().getId();
     }
 
     public void deleteItem(int position) {
@@ -64,7 +72,8 @@ public class ManufacturerAdapter extends FirestoreRecyclerAdapter<Manufacturer, 
             popupMenu.setOnMenuItemClickListener(item -> {
                 switch (item.getItemId()) {
                     case R.id.mnUpdate:
-
+                        Context context = itemView.getContext();
+                        context.startActivity(new Intent(context, AddUpdateManufacturerActivity.class).putExtra("IdManufacturer", manufacturerInformation(getAdapterPosition())));
                         return true;
                     case R.id.mnDelete:
                         deleteProducts(txtManufacturerName.getText().toString());

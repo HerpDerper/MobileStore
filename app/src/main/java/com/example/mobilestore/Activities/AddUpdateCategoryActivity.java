@@ -44,7 +44,6 @@ public class AddUpdateCategoryActivity extends AppCompatActivity {
     }
 
     public void categoryAddUpdateClick(View view) {
-
         if (btnCategoryAddUpdate.getText().equals("Добавить")) {
             insertCategory();
         } else {
@@ -95,8 +94,8 @@ public class AddUpdateCategoryActivity extends AppCompatActivity {
         DocumentReference productReference = firebaseFirestore.collection("Categories").document(id);
         productReference.get().addOnSuccessListener(documentSnapshot -> {
             Category category = documentSnapshot.toObject(Category.class);
-            txtCategoryName.setText(category.getCategoryName());
             categoryName = category.getCategoryName();
+            txtCategoryName.setText(categoryName);
         });
     }
 }

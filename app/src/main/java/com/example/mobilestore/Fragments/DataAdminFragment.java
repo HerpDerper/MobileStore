@@ -22,6 +22,7 @@ import com.example.mobilestore.Adapters.ManufacturerAdapter;
 import com.example.mobilestore.Adapters.ProductAdminAdapter;
 import com.example.mobilestore.Adapters.UserAdapter;
 import com.example.mobilestore.Activities.AddUpdateCategoryActivity;
+import com.example.mobilestore.Activities.AddUpdateManufacturerActivity;
 import com.example.mobilestore.Models.Cart;
 import com.example.mobilestore.Models.Category;
 import com.example.mobilestore.Models.Comment;
@@ -58,10 +59,6 @@ public class DataAdminFragment extends Fragment {
         btnAddData = binding.btnAddData;
         btnAddData.setOnClickListener(view -> {
             switch (adapterName) {
-                case "Users": {
-
-                    break;
-                }
                 case "Products": {
                     startActivity(new Intent(getActivity().getApplicationContext(), AddUpdateProductActivity.class));
                     break;
@@ -71,7 +68,7 @@ public class DataAdminFragment extends Fragment {
                     break;
                 }
                 case "Manufacturers": {
-
+                    startActivity(new Intent(getActivity().getApplicationContext(), AddUpdateManufacturerActivity.class));
                     break;
                 }
             }
