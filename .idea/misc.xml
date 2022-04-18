@@ -16,7 +16,9 @@
         <entry key="..\:/Users/HerpDerp/AndroidStudioProjects/MobileStore/app/src/main/res/layout/activity_change_information.xml" value="0.2359375" />
         <entry key="..\:/Users/HerpDerp/AndroidStudioProjects/MobileStore/app/src/main/res/layout/activity_log_in.xml" value="0.31535756154747946" />
         <entry key="..\:/Users/HerpDerp/AndroidStudioProjects/MobileStore/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/HerpDerp/AndroidStudioProjects/MobileStore/app/src/main/res/layout/activity_main_admin.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/HerpDerp/AndroidStudioProjects/MobileStore/app/src/main/res/layout/activity_main_administrator.xml" value="0.3278985507246377" />
+        <entry key="..\:/Users/HerpDerp/AndroidStudioProjects/MobileStore/app/src/main/res/layout/activity_main_seller.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/HerpDerp/AndroidStudioProjects/MobileStore/app/src/main/res/layout/activity_product_add_update.xml" value="0.2359375" />
         <entry key="..\:/Users/HerpDerp/AndroidStudioProjects/MobileStore/app/src/main/res/layout/activity_product_info.xml" value="0.33127317676143386" />
         <entry key="..\:/Users/HerpDerp/AndroidStudioProjects/MobileStore/app/src/main/res/layout/activity_registration.xml" value="0.17831813576494426" />
@@ -29,6 +31,7 @@
         <entry key="..\:/Users/HerpDerp/AndroidStudioProjects/MobileStore/app/src/main/res/layout/fragment_data.xml" value="0.3278985507246377" />
         <entry key="..\:/Users/HerpDerp/AndroidStudioProjects/MobileStore/app/src/main/res/layout/fragment_data_admin.xml" value="0.17831813576494426" />
         <entry key="..\:/Users/HerpDerp/AndroidStudioProjects/MobileStore/app/src/main/res/layout/fragment_data_administrator.xml" value="0.3278985507246377" />
+        <entry key="..\:/Users/HerpDerp/AndroidStudioProjects/MobileStore/app/src/main/res/layout/fragment_data_seller.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/HerpDerp/AndroidStudioProjects/MobileStore/app/src/main/res/layout/fragment_home.xml" value="0.17831813576494426" />
         <entry key="..\:/Users/HerpDerp/AndroidStudioProjects/MobileStore/app/src/main/res/layout/fragment_notifications.xml" value="0.17831813576494426" />
         <entry key="..\:/Users/HerpDerp/AndroidStudioProjects/MobileStore/app/src/main/res/layout/product_view.xml" value="0.36666666666666664" />
@@ -47,7 +50,10 @@
         <entry key="..\:/Users/HerpDerp/AndroidStudioProjects/MobileStore/app/src/main/res/menu/bottom_nav_menu.xml" value="0.25925925925925924" />
         <entry key="..\:/Users/HerpDerp/AndroidStudioProjects/MobileStore/app/src/main/res/menu/bottom_nav_menu_admin.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/HerpDerp/AndroidStudioProjects/MobileStore/app/src/main/res/menu/bottom_nav_menu_administrator.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/HerpDerp/AndroidStudioProjects/MobileStore/app/src/main/res/menu/bottom_nav_menu_seller.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/HerpDerp/AndroidStudioProjects/MobileStore/app/src/main/res/menu/menu_admin.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/HerpDerp/AndroidStudioProjects/MobileStore/app/src/main/res/menu/optionsmenu_admin.xml" value="0.24537037037037038" />
+        <entry key="..\:/Users/HerpDerp/AndroidStudioProjects/MobileStore/app/src/main/res/menu/optionsmenu_seller.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/HerpDerp/AndroidStudioProjects/MobileStore/app/src/main/res/menu/popupmenu.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/HerpDerp/AndroidStudioProjects/MobileStore/app/src/main/res/menu/popupmenu_delete.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/HerpDerp/AndroidStudioProjects/MobileStore/app/src/main/res/menu/popupmenu_full.xml" value="0.36666666666666664" />

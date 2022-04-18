@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MobileStore">
         <activity
+            android:name=".Activities.MainSellerActivity"
+            android:exported="true" />
+        <activity
             android:name=".Activities.UpdateUserActivity"
             android:exported="true" />
         <activity

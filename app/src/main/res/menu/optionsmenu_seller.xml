@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/mnCategories"
+        android:title="Категории"/>
+
+    <item
+        android:id="@+id/mnManufacturers"
+        android:title="Производители"/>
+
+    <item
+        android:id="@+id/mnProducts"
+        android:title="Товары"/>
+
+</menu>

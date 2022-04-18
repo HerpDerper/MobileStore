@@ -9,22 +9,22 @@ import androidx.navigation.ui.NavigationUI;
 import android.os.Bundle;
 
 import com.example.mobilestore.R;
-import com.example.mobilestore.databinding.ActivityMainAdminBinding;
+import com.example.mobilestore.databinding.ActivityMainSellerBinding;
 
-public class MainAdminActivity extends AppCompatActivity {
+public class MainSellerActivity extends AppCompatActivity {
 
-    private ActivityMainAdminBinding binding;
+    private ActivityMainSellerBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = ActivityMainAdminBinding.inflate(getLayoutInflater());
+        binding = ActivityMainSellerBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_data, R.id.navigation_notifications)
                 .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main_admin);
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main_seller);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
     }
