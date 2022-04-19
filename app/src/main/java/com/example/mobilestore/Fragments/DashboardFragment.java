@@ -17,7 +17,6 @@ import com.example.mobilestore.databinding.FragmentDashboardBinding;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
@@ -26,7 +25,6 @@ public class DashboardFragment extends Fragment {
     private FragmentDashboardBinding binding;
     private final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
     private final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-    private final CollectionReference collectionReference = firebaseFirestore.collection("Carts");
     private CartUserAdapter adapter;
     RecyclerView recyclerView;
 
@@ -48,7 +46,7 @@ public class DashboardFragment extends Fragment {
     }
 
     private void setRecyclerView() {
-        Query query = collectionReference.whereEqualTo("userName", currentUser.getUid());
+        Query query = firebaseFirestore.collection("Carts").whereEqualTo("userName", currentUser.getUid());
         FirestoreRecyclerOptions<Cart> options = new FirestoreRecyclerOptions.Builder<Cart>()
                 .setQuery(query, Cart.class)
                 .build();

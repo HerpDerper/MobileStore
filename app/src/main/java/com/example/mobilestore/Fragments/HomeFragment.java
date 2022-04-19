@@ -29,7 +29,6 @@ public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
     private final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
-    private final CollectionReference collectionReference = firebaseFirestore.collection("Products");
     private ProductUserAdapter adapter;
     RecyclerView recyclerView;
 
@@ -77,7 +76,8 @@ public class HomeFragment extends Fragment {
     }
 
     private void setRecyclerView() {
-        Query query = collectionReference.orderBy("productName", Query.Direction.ASCENDING);
+        Query query = firebaseFirestore.collection("Products")
+                .orderBy("productName", Query.Direction.ASCENDING);
         FirestoreRecyclerOptions<Product> options = new FirestoreRecyclerOptions.Builder<Product>()
                 .setQuery(query, Product.class)
                 .build();
@@ -88,7 +88,10 @@ public class HomeFragment extends Fragment {
     }
 
     private void searchRecyclerView(String word) {
-        Query query = collectionReference.orderBy("productName", Query.Direction.ASCENDING).startAt(firstUpperCase(word)).endAt(firstUpperCase(word) + "\uf8ff");
+        Query query = firebaseFirestore.collection("Products")
+                .orderBy("productName", Query.Direction.ASCENDING)
+                .startAt(firstUpperCase(word))
+                .endAt(firstUpperCase(word) + "\uf8ff");
         FirestoreRecyclerOptions<Product> options = new FirestoreRecyclerOptions.Builder<Product>()
                 .setQuery(query, Product.class)
                 .build();

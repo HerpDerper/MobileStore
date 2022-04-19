@@ -35,7 +35,6 @@ public class UpdateCurrentUserInfoActivity extends AppCompatActivity {
     Button btnChangeInformation;
     DatePickerDialog.OnDateSetListener picker;
     Bundle bundle;
-    private String IdUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,17 +81,11 @@ public class UpdateCurrentUserInfoActivity extends AppCompatActivity {
         txtDateOfBirth = findViewById(R.id.txtDateOfBirth);
         btnChangeInformation = findViewById(R.id.btnChangeInformation);
         bundle = getIntent().getExtras();
-        IdUser = bundle.getString("IdUser");
     }
 
     private void setData() {
         DocumentReference userReference;
-        if(IdUser!=null){
-            userReference = firebaseFirestore.collection("Users").document(IdUser);
-        }
-        else{
             userReference = firebaseFirestore.collection("Users").document(currentUser.getUid());
-        }
         userReference.get().addOnSuccessListener(documentSnapshot -> {
             User user = documentSnapshot.toObject(User.class);
             txtLogin.setText(user.getLogin());

@@ -21,7 +21,6 @@ import com.example.mobilestore.Models.User;
 import com.example.mobilestore.databinding.FragmentNotificationsBinding;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -38,7 +37,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class NotificationsFragment extends Fragment {
 
     private final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
-    private final CollectionReference collectionReference = firebaseFirestore.collection("Users");
     private final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private final StorageReference storageRef = FirebaseStorage.getInstance().getReference();
     CircleImageView imgAvatar;
@@ -77,7 +75,7 @@ public class NotificationsFragment extends Fragment {
     }
 
     private void setData() {
-        DocumentReference userReference = collectionReference.document(firebaseAuth.getCurrentUser().getUid());
+        DocumentReference userReference = firebaseFirestore.collection("Users").document(firebaseAuth.getCurrentUser().getUid());
         userReference.get().addOnSuccessListener(documentSnapshot -> {
             user = documentSnapshot.toObject(User.class);
             Picasso.get()
@@ -103,7 +101,7 @@ public class NotificationsFragment extends Fragment {
                         deleteCommentLikes();
                         deleteComments();
                         deleteCarts();
-                        DocumentReference userReference = collectionReference.document(firebaseAuth.getCurrentUser().getUid());
+                        DocumentReference userReference = firebaseFirestore.collection("Users").document(firebaseAuth.getCurrentUser().getUid());
                         userReference.delete();
                         firebaseAuth.getCurrentUser().delete();
                         firebaseAuth.signOut();

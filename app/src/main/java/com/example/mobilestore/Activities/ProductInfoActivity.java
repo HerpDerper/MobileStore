@@ -47,6 +47,7 @@ public class ProductInfoActivity extends AppCompatActivity {
     private int documentCount;
     private String IdComment;
     private int productCount;
+    private float price;
     private String role;
 
     @Override
@@ -54,7 +55,6 @@ public class ProductInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_info);
         initialize();
-        getIncomingIntent();
         setRecyclerView();
         adapter.startListening();
         Query query = collectionReference
@@ -73,6 +73,12 @@ public class ProductInfoActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        getIncomingIntent();
     }
 
     private void initialize() {
@@ -97,6 +103,11 @@ public class ProductInfoActivity extends AppCompatActivity {
     }
 
     public void buyClick(View view) {
+        startActivity(new Intent(getApplicationContext(), BuyingActivity.class)
+                .putExtra("IdProduct", IdProduct)
+                .putExtra("productCount", productCount)
+                .putExtra("price", price)
+                .putExtra("productName", getTitle().toString()));
     }
 
     public void addCommentClick(View view) {
@@ -162,12 +173,16 @@ public class ProductInfoActivity extends AppCompatActivity {
             Picasso.get()
                     .load(product.getProductImage())
                     .into(imgProductImage);
-            txtPrice.setText(product.getPrice() + "₽");
+            price = product.getPrice();
+            txtPrice.setText(price + "₽");
             txtRating.setText(String.format("%.1f", product.getRating()) + " (" + product.getRatingCount() + " оценок)");
             txtDescription.setText(product.getDescription());
             rtnRating.setRating(product.getRating());
             productCount = product.getProductCount();
             setTitle(product.getProductName());
+            if (productCount == 0) {
+                btnBuy.setVisibility(View.GONE);
+            }
         });
     }
 
