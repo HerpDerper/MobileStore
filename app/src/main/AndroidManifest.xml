@@ -10,31 +10,42 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MobileStore">
         <activity
+            android:name=".Activities.BuyingCartActivity"
+            android:exported="true"
+            android:label="Покупка товаров"/>
+        <activity
             android:name=".Activities.BuyingActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:label="Покупка товара"/>
         <activity
             android:name=".Activities.MainSellerActivity"
             android:exported="true" />
         <activity
             android:name=".Activities.UpdateUserActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:label="Обновить роль"/>
         <activity
             android:name=".Activities.AddUpdateManufacturerActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:label="Производитель"/>
         <activity
             android:name=".Activities.AddUpdateCategoryActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:label="Категория"/>
         <activity
             android:name=".Activities.AddUpdateProductActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:label="Товар"/>
         <activity
             android:name=".Activities.UpdateCurrentUserInfoActivity"
             android:exported="true"
-            android:parentActivityName=".Activities.MainActivity" />
+            android:parentActivityName=".Activities.MainActivity"
+            android:label="Обновить данные"/>
         <activity
             android:name=".Activities.AddCommentActivity"
             android:exported="true"
-            android:parentActivityName=".Activities.ProductInfoActivity" />
+            android:parentActivityName=".Activities.ProductInfoActivity"
+            android:label="Добавить комментарий"/>
         <activity
             android:name=".Activities.ProductInfoActivity"
             android:exported="true" />
@@ -64,5 +75,4 @@
             </intent-filter>
         </activity>
     </application>
-
 </manifest>

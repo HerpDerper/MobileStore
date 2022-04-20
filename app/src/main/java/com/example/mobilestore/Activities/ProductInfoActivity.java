@@ -34,7 +34,6 @@ import com.squareup.picasso.Picasso;
 public class ProductInfoActivity extends AppCompatActivity {
 
     private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
-    private CollectionReference collectionReference = firebaseFirestore.collection("Comments");
     private FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
     ImageView imgProductImage;
     TextView txtPrice, txtExtraInfo, txtDescription, txtRating;
@@ -57,7 +56,7 @@ public class ProductInfoActivity extends AppCompatActivity {
         initialize();
         setRecyclerView();
         adapter.startListening();
-        Query query = collectionReference
+        Query query = firebaseFirestore.collection("Comments")
                 .whereEqualTo("productName", IdProduct)
                 .whereEqualTo("userName", currentUser.getUid());
         query.get().addOnCompleteListener(task -> {
@@ -187,7 +186,7 @@ public class ProductInfoActivity extends AppCompatActivity {
     }
 
     private void setRecyclerView() {
-        Query query = collectionReference.whereEqualTo("productName", IdProduct);
+        Query query = firebaseFirestore.collection("Comments").whereEqualTo("productName", IdProduct);
         FirestoreRecyclerOptions<Comment> options = new FirestoreRecyclerOptions.Builder<Comment>()
                 .setQuery(query, Comment.class)
                 .build();
@@ -217,7 +216,7 @@ public class ProductInfoActivity extends AppCompatActivity {
     }
 
     private void deleteComment() {
-        DocumentReference commentReference = collectionReference.document(IdComment);
+        DocumentReference commentReference = firebaseFirestore.collection("Comments").document(IdComment);
         commentReference.get().addOnSuccessListener(documentSnapshot -> {
             Comment comment = documentSnapshot.toObject(Comment.class);
             float rating = comment.getRating();

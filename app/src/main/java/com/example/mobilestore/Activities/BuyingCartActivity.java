@@ -15,10 +15,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
-public class BuyingActivity extends AppCompatActivity {
+public class BuyingCartActivity extends AppCompatActivity {
 
     private final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
     private final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -26,19 +30,15 @@ public class BuyingActivity extends AppCompatActivity {
     TextView txtProductName, txtPrice;
     Calendar calendar = Calendar.getInstance();
     Bundle bundle;
-    private String IdProduct;
-    private String productName;
-    private int productCount;
-    private float price;
+    private float price = 0;
     private int count = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_buying);
+        setContentView(R.layout.activity_buying_cart);
         initialize();
-        txtPrice.setText(txtPrice.getText() + String.valueOf(price) + "₽");
-        txtProductName.setText(productName);
+        setTxtPrice();
         txtCardNumber.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -74,10 +74,6 @@ public class BuyingActivity extends AppCompatActivity {
         txtProductName = findViewById(R.id.txtProductName);
         txtPrice = findViewById(R.id.txtPrice);
         bundle = getIntent().getExtras();
-        IdProduct = bundle.getString("IdProduct");
-        productCount = bundle.getInt("productCount");
-        price = bundle.getFloat("price");
-        productName = bundle.getString("productName");
     }
 
     public void buyClick(View view) {
@@ -105,7 +101,7 @@ public class BuyingActivity extends AppCompatActivity {
             Toast.makeText(this, "Карта недействительна", Toast.LENGTH_SHORT).show();
             return;
         }
-        updateProduct(IdProduct);
+        updateProducts();
         finish();
         showMessage();
     }
@@ -114,18 +110,44 @@ public class BuyingActivity extends AppCompatActivity {
         finish();
     }
 
-    private void updateProduct(String IdProduct) {
-        DocumentReference productReference = firebaseFirestore.collection("Products").document(IdProduct);
-        productCount--;
-        productReference.update("productCount", productCount);
-    }
-
     private void showMessage() {
         DocumentReference productReference = firebaseFirestore.collection("Users").document(currentUser.getUid());
         productReference.get().addOnSuccessListener(documentSnapshot -> {
             Toast.makeText(this,
-                    "Поздравляем с успешной покупкой!\nДанный товар будет доставлен по вашему адресу: " + documentSnapshot.getString("address"),
+                    "Поздравляем с успешной покупкой!\nТовары будут доставлены по вашему адресу: " + documentSnapshot.getString("address"),
                     Toast.LENGTH_SHORT).show();
+        });
+    }
+
+    private void updateProducts() {
+        Query query = firebaseFirestore.collection("Carts").whereEqualTo("userName", currentUser.getUid());
+        query.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    DocumentReference productReference = firebaseFirestore.collection("Products").document(document.getString("productName"));
+                    productReference.get().addOnSuccessListener(documentSnapshot -> {
+                        productReference.update("productCount", documentSnapshot.getLong("productCount") - document.getLong("productCount"));
+                    });
+                    DocumentReference cartReference = firebaseFirestore.collection("Carts").document(document.getId());
+                    cartReference.delete();
+                }
+            }
+        });
+    }
+
+    private void setTxtPrice() {
+        Query query = firebaseFirestore.collection("Carts").whereEqualTo("userName", currentUser.getUid());
+        query.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    DocumentReference productReference = firebaseFirestore.collection("Products").document(document.getString("productName"));
+                    productReference.get().addOnSuccessListener(documentSnapshot -> {
+                        price += documentSnapshot.getLong("price") * document.getLong("productCount");
+                        txtPrice.setText(String.valueOf(price));
+                        txtPrice.setText("К оплате: " + txtPrice.getText() + "₽");
+                    });
+                }
+            }
         });
     }
 }
