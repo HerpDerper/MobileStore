@@ -19,10 +19,10 @@ public class UpdateUserActivity extends AppCompatActivity {
 
     private final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
     Spinner spnRoleName;
+    Bundle bundle;
     List<String> listRoles;
     ArrayAdapter<String> adapterRoles;
     private String IdUser;
-    Bundle bundle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -44,7 +44,7 @@ public class AddCommentActivity extends AppCompatActivity {
         rtnRating = findViewById(R.id.rtnRating);
         bundle = getIntent().getExtras();
         IdProduct = bundle.getString("IdProduct");
-        if(bundle.getString("Role")!=null) role = bundle.getString("Role");
+        if (bundle.getString("Role") != null) role = bundle.getString("Role");
     }
 
     public void addCommentClick(View view) {

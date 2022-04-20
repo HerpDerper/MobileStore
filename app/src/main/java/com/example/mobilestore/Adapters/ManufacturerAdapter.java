@@ -12,7 +12,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.mobilestore.Activities.AddUpdateCategoryActivity;
 import com.example.mobilestore.Activities.AddUpdateManufacturerActivity;
 import com.example.mobilestore.Models.Manufacturer;
 import com.example.mobilestore.R;

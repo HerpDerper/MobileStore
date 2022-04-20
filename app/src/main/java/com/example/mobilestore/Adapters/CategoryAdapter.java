@@ -13,7 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mobilestore.Activities.AddUpdateCategoryActivity;
-import com.example.mobilestore.Activities.AddUpdateProductActivity;
 import com.example.mobilestore.Models.Category;
 import com.example.mobilestore.R;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;

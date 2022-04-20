@@ -23,7 +23,6 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -39,8 +38,8 @@ public class ProductInfoActivity extends AppCompatActivity {
     TextView txtPrice, txtExtraInfo, txtDescription, txtRating;
     RatingBar rtnRating;
     Button btnDeleteComment, btnAddComment, btnBuy, btnAddToCart;
+    RecyclerView recyclerView;
     private CommentUserAdapter adapter;
-    private RecyclerView recyclerView;
     Bundle bundle;
     private String IdProduct;
     private int documentCount;

@@ -36,8 +36,7 @@ public class DashboardFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        recyclerView = binding.recyclerCarts;
-        btnBuyAllCart = binding.btnBuyAllCart;
+        initialize();
         setRecyclerView();
         adapter.startListening();
         btnBuyAllCart.setOnClickListener(view -> {
@@ -51,6 +50,11 @@ public class DashboardFragment extends Fragment {
         super.onDestroyView();
         binding = null;
         adapter.stopListening();
+    }
+
+    private void initialize() {
+        recyclerView = binding.recyclerCarts;
+        btnBuyAllCart = binding.btnBuyAllCart;
     }
 
     private void setRecyclerView() {
@@ -67,6 +71,7 @@ public class DashboardFragment extends Fragment {
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
                 return false;
             }
+
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 adapter.deleteItem(viewHolder.getAdapterPosition());

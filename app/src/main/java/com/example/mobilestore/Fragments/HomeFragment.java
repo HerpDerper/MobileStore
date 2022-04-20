@@ -21,7 +21,6 @@ import com.example.mobilestore.Adapters.ProductUserAdapter;
 import com.example.mobilestore.R;
 import com.example.mobilestore.databinding.FragmentHomeBinding;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
@@ -29,8 +28,8 @@ public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
     private final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
-    private ProductUserAdapter adapter;
     RecyclerView recyclerView;
+    private ProductUserAdapter adapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {

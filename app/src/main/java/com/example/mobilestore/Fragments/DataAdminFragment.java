@@ -55,8 +55,15 @@ public class DataAdminFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentDataAdminBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        recyclerView = binding.recyclerAll;
-        btnAddData = binding.btnAddData;
+        initialize();
+        setAdapters();
+        setRecyclerView(adapterName);
+        adapterUser.startListening();
+        adapterProduct.startListening();
+        adapterCategory.startListening();
+        adapterCart.startListening();
+        adapterComment.startListening();
+        adapterManufacturer.startListening();
         btnAddData.setOnClickListener(view -> {
             switch (adapterName) {
                 case "Products": {
@@ -73,15 +80,12 @@ public class DataAdminFragment extends Fragment {
                 }
             }
         });
-        setAdapters();
-        setRecyclerView(adapterName);
-        adapterUser.startListening();
-        adapterProduct.startListening();
-        adapterCategory.startListening();
-        adapterCart.startListening();
-        adapterComment.startListening();
-        adapterManufacturer.startListening();
         return root;
+    }
+
+    private void initialize() {
+        recyclerView = binding.recyclerAll;
+        btnAddData = binding.btnAddData;
     }
 
     @Override

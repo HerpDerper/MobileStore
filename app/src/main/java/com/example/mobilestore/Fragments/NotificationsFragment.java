@@ -43,8 +43,8 @@ public class NotificationsFragment extends Fragment {
     TextView txtLogin;
     Button btnShowInformation, btnChangeInformation, btnLogOut, btnDeleteAccount;
     private User user;
-    final int CAMERA_REQUEST = 1;
-    final int PIC_CROP = 2;
+    private final int CAMERA_REQUEST = 1;
+    private final int PIC_CROP = 2;
     Uri imageUri;
 
     private FragmentNotificationsBinding binding;
@@ -59,12 +59,6 @@ public class NotificationsFragment extends Fragment {
         return root;
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
-    }
-
     private void initialize() {
         imgAvatar = binding.imgAvatar;
         txtLogin = binding.txtLogin;
@@ -72,6 +66,12 @@ public class NotificationsFragment extends Fragment {
         btnChangeInformation = binding.btnChangeInformation;
         btnLogOut = binding.btnLogOut;
         btnDeleteAccount = binding.btnDeleteAccount;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 
     private void setData() {

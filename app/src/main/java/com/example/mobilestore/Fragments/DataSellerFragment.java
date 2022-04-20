@@ -46,8 +46,12 @@ public class DataSellerFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentDataSellerBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        recyclerView = binding.recyclerAll;
-        btnAddData = binding.btnAddData;
+        initialize();
+        setAdapters();
+        setRecyclerView(adapterName);
+        adapterProduct.startListening();
+        adapterCategory.startListening();
+        adapterManufacturer.startListening();
         btnAddData.setOnClickListener(view -> {
             switch (adapterName) {
                 case "Products": {
@@ -64,12 +68,12 @@ public class DataSellerFragment extends Fragment {
                 }
             }
         });
-        setAdapters();
-        setRecyclerView(adapterName);
-        adapterProduct.startListening();
-        adapterCategory.startListening();
-        adapterManufacturer.startListening();
         return root;
+    }
+
+    private void initialize() {
+        recyclerView = binding.recyclerAll;
+        btnAddData = binding.btnAddData;
     }
 
     @Override

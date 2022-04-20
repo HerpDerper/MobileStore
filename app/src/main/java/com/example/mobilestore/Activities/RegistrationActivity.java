@@ -62,14 +62,7 @@ public class RegistrationActivity extends AppCompatActivity {
             else
                 txtPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
         });
-        picker = (datePicker, year, monthOfYear, dauOfMonth) -> {
-            date.set(Calendar.YEAR, year);
-            date.set(Calendar.MONTH, monthOfYear);
-            date.set(Calendar.DAY_OF_MONTH, dauOfMonth);
-            txtDateOfBirth.setText(DateUtils.formatDateTime(getApplicationContext(),
-                    date.getTimeInMillis(),
-                    DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR));
-        };
+        setDatePicker();
         txtDateOfBirth.setOnTouchListener((view, motionEvent) -> {
             if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
                 new DatePickerDialog(RegistrationActivity.this, picker,
@@ -151,6 +144,17 @@ public class RegistrationActivity extends AppCompatActivity {
             }
         } catch (Exception exception) {
         }
+    }
+
+    private void setDatePicker() {
+        picker = (datePicker, year, monthOfYear, dauOfMonth) -> {
+            date.set(Calendar.YEAR, year);
+            date.set(Calendar.MONTH, monthOfYear);
+            date.set(Calendar.DAY_OF_MONTH, dauOfMonth);
+            txtDateOfBirth.setText(DateUtils.formatDateTime(getApplicationContext(),
+                    date.getTimeInMillis(),
+                    DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR));
+        };
     }
 
     private void uploadImage() {

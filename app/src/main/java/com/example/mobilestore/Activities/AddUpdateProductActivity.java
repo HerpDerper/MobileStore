@@ -39,15 +39,15 @@ public class AddUpdateProductActivity extends AppCompatActivity {
     Spinner spnManufacturerName, spnCategoryName;
     Button btnProductAddUpdate;
     ImageView imgProductImage;
+    Bundle bundle;
     List<String> listManufacturers;
     List<String> listCategories;
     ArrayAdapter<String> adapterManufacturers;
     ArrayAdapter<String> adapterCategories;
-    Uri imageUri;
     private int ratingCount;
     private float rating;
     private String IdProduct;
-    Bundle bundle;
+    Uri imageUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +59,26 @@ public class AddUpdateProductActivity extends AppCompatActivity {
     }
 
     public void productAddUpdateClick(View view) {
+        if (TextUtils.isEmpty(txtProductName.getText())) {
+            Toast.makeText(this, "Не введено название", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (TextUtils.isEmpty(txtProductCount.getText())) {
+            Toast.makeText(this, "Не введено количество", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (TextUtils.isEmpty(txtPrice.getText())) {
+            Toast.makeText(this, "Не введена цена", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (TextUtils.isEmpty(txtGuarantee.getText())) {
+            Toast.makeText(this, "Не введена гарантия", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (TextUtils.isEmpty(txtDescription.getText())) {
+            Toast.makeText(this, "Не введено описание", Toast.LENGTH_SHORT).show();
+            return;
+        }
         if (btnProductAddUpdate.getText().equals("Добавить")) {
             uploadImage();
         } else {
@@ -134,26 +154,6 @@ public class AddUpdateProductActivity extends AppCompatActivity {
     }
 
     public void uploadImage() {
-        if (TextUtils.isEmpty(txtProductName.getText())) {
-            Toast.makeText(this, "Не введено название", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (TextUtils.isEmpty(txtProductCount.getText())) {
-            Toast.makeText(this, "Не введено количество", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (TextUtils.isEmpty(txtPrice.getText())) {
-            Toast.makeText(this, "Не введена цена", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (TextUtils.isEmpty(txtGuarantee.getText())) {
-            Toast.makeText(this, "Не введена гарантия", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (TextUtils.isEmpty(txtDescription.getText())) {
-            Toast.makeText(this, "Не введено описание", Toast.LENGTH_SHORT).show();
-            return;
-        }
         Bitmap bitmap = ((BitmapDrawable) imgProductImage.getDrawable()).getBitmap();
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
@@ -167,26 +167,6 @@ public class AddUpdateProductActivity extends AppCompatActivity {
     }
 
     public void uploadImage(String id) {
-        if (TextUtils.isEmpty(txtProductName.getText())) {
-            Toast.makeText(this, "Не введено название", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (TextUtils.isEmpty(txtProductCount.getText())) {
-            Toast.makeText(this, "Не введено количество", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (TextUtils.isEmpty(txtPrice.getText())) {
-            Toast.makeText(this, "Не введена цена", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (TextUtils.isEmpty(txtGuarantee.getText())) {
-            Toast.makeText(this, "Не введена гарантия", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (TextUtils.isEmpty(txtDescription.getText())) {
-            Toast.makeText(this, "Не введено описание", Toast.LENGTH_SHORT).show();
-            return;
-        }
         Bitmap bitmap = ((BitmapDrawable) imgProductImage.getDrawable()).getBitmap();
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);

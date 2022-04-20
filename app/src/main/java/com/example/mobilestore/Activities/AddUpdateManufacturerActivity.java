@@ -21,9 +21,9 @@ public class AddUpdateManufacturerActivity extends AppCompatActivity {
     private final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
     EditText txtManufacturerName, txtAddress;
     Button btnManufacturerAddUpdate;
+    Bundle bundle;
     private String IdManufacturer;
     private String manufacturerName;
-    Bundle bundle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +45,14 @@ public class AddUpdateManufacturerActivity extends AppCompatActivity {
     }
 
     public void manufacturerAddUpdateClick(View view) {
+        if (TextUtils.isEmpty(txtManufacturerName.getText())) {
+            Toast.makeText(this, "Не введено наименование", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (TextUtils.isEmpty(txtAddress.getText())) {
+            Toast.makeText(this, "Не введен адрес", Toast.LENGTH_SHORT).show();
+            return;
+        }
         if (btnManufacturerAddUpdate.getText().equals("Добавить")) {
             insertManufacturer();
         } else {
@@ -58,28 +66,12 @@ public class AddUpdateManufacturerActivity extends AppCompatActivity {
     }
 
     private void insertManufacturer() {
-        if (TextUtils.isEmpty(txtManufacturerName.getText())) {
-            Toast.makeText(this, "Не введено наименование", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (TextUtils.isEmpty(txtAddress.getText())) {
-            Toast.makeText(this, "Не введен адрес", Toast.LENGTH_SHORT).show();
-            return;
-        }
         DocumentReference manufacturerReference = firebaseFirestore.collection("Manufacturers").document();
         Manufacturer manufacturer = new Manufacturer(txtManufacturerName.getText().toString().trim(), txtAddress.getText().toString().trim());
         manufacturerReference.set(manufacturer);
     }
 
     private void updateManufacturer(String id) {
-        if (TextUtils.isEmpty(txtManufacturerName.getText())) {
-            Toast.makeText(this, "Не введено наименование", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (TextUtils.isEmpty(txtAddress.getText())) {
-            Toast.makeText(this, "Не введен адрес", Toast.LENGTH_SHORT).show();
-            return;
-        }
         DocumentReference manufacturerReference = firebaseFirestore.collection("Manufacturers").document(id);
         Manufacturer manufacturer = new Manufacturer(txtManufacturerName.getText().toString().trim(), txtAddress.getText().toString().trim());
         manufacturerReference.set(manufacturer);

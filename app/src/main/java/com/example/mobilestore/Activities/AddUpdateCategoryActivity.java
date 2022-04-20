@@ -21,9 +21,9 @@ public class AddUpdateCategoryActivity extends AppCompatActivity {
     private final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
     EditText txtCategoryName;
     Button btnCategoryAddUpdate;
+    Bundle bundle;
     private String IdCategory;
     private String categoryName;
-    Bundle bundle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +44,10 @@ public class AddUpdateCategoryActivity extends AppCompatActivity {
     }
 
     public void categoryAddUpdateClick(View view) {
+        if (TextUtils.isEmpty(txtCategoryName.getText())) {
+            Toast.makeText(this, "Не введено название", Toast.LENGTH_SHORT).show();
+            return;
+        }
         if (btnCategoryAddUpdate.getText().equals("Добавить")) {
             insertCategory();
         } else {
@@ -57,20 +61,12 @@ public class AddUpdateCategoryActivity extends AppCompatActivity {
     }
 
     private void insertCategory() {
-        if (TextUtils.isEmpty(txtCategoryName.getText())) {
-            Toast.makeText(this, "Не введено название", Toast.LENGTH_SHORT).show();
-            return;
-        }
         DocumentReference categoryReference = firebaseFirestore.collection("Categories").document();
         Category category = new Category(txtCategoryName.getText().toString().trim());
         categoryReference.set(category);
     }
 
     private void updateCategory(String id) {
-        if (TextUtils.isEmpty(txtCategoryName.getText())) {
-            Toast.makeText(this, "Не введено название", Toast.LENGTH_SHORT).show();
-            return;
-        }
         DocumentReference categoryReference = firebaseFirestore.collection("Categories").document(id);
         Category category = new Category(txtCategoryName.getText().toString().trim());
         categoryReference.set(category);
