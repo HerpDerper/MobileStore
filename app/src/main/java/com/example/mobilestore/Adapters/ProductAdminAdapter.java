@@ -41,7 +41,6 @@ public class ProductAdminAdapter extends FirestoreRecyclerAdapter<Product, Produ
         holder.txtManufacturerName.setText(model.getManufacturerName());
         Picasso.get()
                 .load(model.getProductImage())
-                .resize(90, 90)
                 .into(holder.imgProductImage);
     }
 

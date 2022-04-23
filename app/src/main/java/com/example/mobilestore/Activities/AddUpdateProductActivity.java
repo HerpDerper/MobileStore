@@ -211,7 +211,6 @@ public class AddUpdateProductActivity extends AppCompatActivity {
             ratingCount = product.getRatingCount();
             Picasso.get()
                     .load(product.getProductImage())
-                    .resize(90, 90)
                     .into(imgProductImage);
         });
     }
