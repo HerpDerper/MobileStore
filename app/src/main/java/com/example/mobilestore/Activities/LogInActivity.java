@@ -54,7 +54,7 @@ public class LogInActivity extends AppCompatActivity {
                         userReference.get().addOnSuccessListener(documentSnapshot -> {
                             switch (documentSnapshot.getString("roleName")) {
                                 case "Пользователь":
-                                    startActivity(new Intent(LogInActivity.this, MainActivity.class));
+                                    startActivity(new Intent(LogInActivity.this, MainUserActivity.class));
                                     finish();
                                     break;
                                 case "Администратор":

@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.mobilestore.Adapters.CartUserAdapter;
 import com.example.mobilestore.Activities.BuyingCartActivity;
 import com.example.mobilestore.Models.Cart;
-import com.example.mobilestore.databinding.FragmentDashboardBinding;
+import com.example.mobilestore.databinding.FragmentCartBinding;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,9 +23,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
-public class DashboardFragment extends Fragment {
+public class CartFragment extends Fragment {
 
-    private FragmentDashboardBinding binding;
+    private FragmentCartBinding binding;
     private final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
     private final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
     FloatingActionButton btnBuyAllCart;
@@ -34,7 +34,7 @@ public class DashboardFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentDashboardBinding.inflate(inflater, container, false);
+        binding = FragmentCartBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         initialize();
         setRecyclerView();

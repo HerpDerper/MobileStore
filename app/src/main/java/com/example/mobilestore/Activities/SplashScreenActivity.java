@@ -27,7 +27,7 @@ public class SplashScreenActivity extends AppCompatActivity {
             userReference.get().addOnSuccessListener(documentSnapshot -> {
                 switch (documentSnapshot.getString("roleName")) {
                     case "Пользователь":
-                        startActivity(new Intent(SplashScreenActivity.this, MainActivity.class));
+                        startActivity(new Intent(SplashScreenActivity.this, MainUserActivity.class));
                         finish();
                         break;
                     case "Администратор":

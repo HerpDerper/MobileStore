@@ -37,9 +37,9 @@
             android:exported="true"
             android:label="Товар"/>
         <activity
-            android:name=".Activities.UpdateCurrentUserInfoActivity"
+            android:name=".Activities.UpdateCurrentUserActivity"
             android:exported="true"
-            android:parentActivityName=".Activities.MainActivity"
+            android:parentActivityName=".Activities.MainUserActivity"
             android:label="Обновить данные"/>
         <activity
             android:name=".Activities.AddCommentActivity"
@@ -59,7 +59,7 @@
             android:label="Регистрация"
             android:parentActivityName=".Activities.LogInActivity" />
         <activity
-            android:name=".Activities.MainActivity"
+            android:name=".Activities.MainUserActivity"
             android:exported="true" />
         <activity
             android:name=".Activities.MainAdminActivity"

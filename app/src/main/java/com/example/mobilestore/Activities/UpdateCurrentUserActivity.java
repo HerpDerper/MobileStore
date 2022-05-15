@@ -25,7 +25,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Calendar;
 
-public class UpdateCurrentUserInfoActivity extends AppCompatActivity {
+public class UpdateCurrentUserActivity extends AppCompatActivity {
 
     private final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
     private final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -39,7 +39,7 @@ public class UpdateCurrentUserInfoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_update_current_user_info);
+        setContentView(R.layout.activity_update_current_user);
         initialize();
         setData();
         showPassword.setOnCheckedChangeListener((compoundButton, b) -> {
@@ -51,7 +51,7 @@ public class UpdateCurrentUserInfoActivity extends AppCompatActivity {
         setDatePicker();
         txtDateOfBirth.setOnTouchListener((view, motionEvent) -> {
             if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                new DatePickerDialog(UpdateCurrentUserInfoActivity.this, picker,
+                new DatePickerDialog(UpdateCurrentUserActivity.this, picker,
                         date.get(Calendar.YEAR),
                         date.get(Calendar.MONTH),
                         date.get(Calendar.DAY_OF_MONTH)).show();
@@ -144,7 +144,7 @@ public class UpdateCurrentUserInfoActivity extends AppCompatActivity {
                 userReference.update("userSurname", txtUserSurname.getText().toString().trim());
                 currentUser.updatePassword(txtPassword.getText().toString().trim());
                 Toast.makeText(this, "Данные обновлены", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(this, MainActivity.class));
+                startActivity(new Intent(this, MainUserActivity.class));
                 finish();
             } else
                 Toast.makeText(this, "Ошибка, пользователь с введенным Email адресом уже существует", Toast.LENGTH_SHORT).show();

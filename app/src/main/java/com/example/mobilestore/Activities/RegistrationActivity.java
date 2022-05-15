@@ -197,7 +197,7 @@ public class RegistrationActivity extends AppCompatActivity {
                                 txtAddress.getText().toString(), txtDateOfBirth.getText().toString(), imageUri.toString());
                         userReference.set(user);
                         Toast.makeText(this, "Вы успешно зарегистрированны", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(this, RegistrationActivity.class));
+                        startActivity(new Intent(this, MainUserActivity.class));
                         finish();
                     } else
                         Toast.makeText(this, "Ошибка, пользователь с введенным Email адресом уже существует", Toast.LENGTH_SHORT).show();

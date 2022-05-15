@@ -22,7 +22,7 @@ public class MainSellerActivity extends AppCompatActivity {
         binding = ActivityMainSellerBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_data_seller, R.id.navigation_notifications)
+                R.id.navigation_data_seller, R.id.navigation_home)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main_seller);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);

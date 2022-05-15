@@ -34,12 +34,14 @@ import com.example.mobilestore.R;
 import com.example.mobilestore.databinding.FragmentDataAdminBinding;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
 public class DataAdminFragment extends Fragment {
 
     private final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+    private final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private FragmentDataAdminBinding binding;
     FloatingActionButton btnAddData;
     RecyclerView recyclerView;
@@ -150,7 +152,7 @@ public class DataAdminFragment extends Fragment {
     }
 
     private void setAdapters() {
-        Query query = firebaseFirestore.collection("Users");
+        Query query = firebaseFirestore.collection("Users").whereNotEqualTo("email", firebaseAuth.getCurrentUser().getEmail());
         FirestoreRecyclerOptions<User> optionsUser = new FirestoreRecyclerOptions.Builder<User>()
                 .setQuery(query, User.class)
                 .build();
