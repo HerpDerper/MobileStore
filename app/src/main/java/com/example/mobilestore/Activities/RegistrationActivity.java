@@ -192,9 +192,15 @@ public class RegistrationActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         DocumentReference userReference = firebaseFirestore.collection("Users").document(firebaseAuth.getCurrentUser().getUid());
                         User user = new User(
-                                txtUserSurname.getText().toString().trim(), txtUserName.getText().toString().trim(),
-                                txtEmail.getText().toString().trim().toLowerCase(Locale.ROOT), txtLogin.getText().toString(), "Пользователь",
-                                txtAddress.getText().toString(), txtDateOfBirth.getText().toString(), imageUri.toString());
+                                txtUserSurname.getText().toString().trim(),
+                                txtUserName.getText().toString().trim(),
+                                txtEmail.getText().toString().trim().toLowerCase(),
+                                txtLogin.getText().toString(),
+                                txtPassword.getText().toString().trim(),
+                                "Пользователь",
+                                txtAddress.getText().toString(),
+                                txtDateOfBirth.getText().toString(),
+                                imageUri.toString());
                         userReference.set(user);
                         Toast.makeText(this, "Вы успешно зарегистрированны", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(this, MainUserActivity.class));

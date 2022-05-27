@@ -140,6 +140,7 @@ public class UpdateCurrentUserActivity extends AppCompatActivity {
                 userReference.update("dateOfBirth", txtDateOfBirth.getText().toString().trim());
                 userReference.update("email", txtEmail.getText().toString().trim());
                 userReference.update("login", txtLogin.getText().toString().trim());
+                userReference.update("password", txtPassword.getText().toString().trim());
                 userReference.update("userName", txtUserName.getText().toString().trim());
                 userReference.update("userSurname", txtUserSurname.getText().toString().trim());
                 currentUser.updatePassword(txtPassword.getText().toString().trim());

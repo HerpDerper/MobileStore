@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -29,6 +30,7 @@ public class CartFragment extends Fragment {
     private final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
     private final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
     FloatingActionButton btnBuyAllCart;
+    TextView txtCartEmpty;
     RecyclerView recyclerView;
     private CartUserAdapter adapter;
 
@@ -39,10 +41,18 @@ public class CartFragment extends Fragment {
         initialize();
         setRecyclerView();
         adapter.startListening();
-        btnBuyAllCart.setOnClickListener(view -> {
-            startActivity(new Intent(getActivity(), BuyingCartActivity.class));
-        });
+        btnBuyAllCart.setOnClickListener(view -> startActivity(new Intent(getActivity(), BuyingCartActivity.class)));
         return root;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (adapter.getItemCount() > 0) {
+            btnBuyAllCart.setVisibility(View.VISIBLE);
+        } else {
+            txtCartEmpty.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -55,6 +65,7 @@ public class CartFragment extends Fragment {
     private void initialize() {
         recyclerView = binding.recyclerCarts;
         btnBuyAllCart = binding.btnBuyAllCart;
+        txtCartEmpty = binding.txtCartEmpty;
     }
 
     private void setRecyclerView() {
@@ -74,6 +85,10 @@ public class CartFragment extends Fragment {
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                if (adapter.getItemCount() == 1) {
+                    btnBuyAllCart.setVisibility(View.GONE);
+                    txtCartEmpty.setVisibility(View.VISIBLE);
+                }
                 adapter.deleteItem(viewHolder.getAdapterPosition());
             }
         }).attachToRecyclerView(recyclerView);

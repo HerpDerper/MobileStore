@@ -47,6 +47,11 @@ public class CartUserAdapter extends FirestoreRecyclerAdapter<Cart, CartUserAdap
         });
     }
 
+    @Override
+    public int getItemCount() {
+        return super.getItemCount();
+    }
+
     public String cartInformation(int position) {
         return getSnapshots().getSnapshot(position).getReference().getId();
     }
