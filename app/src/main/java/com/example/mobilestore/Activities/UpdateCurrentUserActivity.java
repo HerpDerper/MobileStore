@@ -92,12 +92,13 @@ public class UpdateCurrentUserActivity extends AppCompatActivity {
         userReference = firebaseFirestore.collection("Users").document(currentUser.getUid());
         userReference.get().addOnSuccessListener(documentSnapshot -> {
             User user = documentSnapshot.toObject(User.class);
-            txtLogin.setText(user.getLogin());
-            txtAddress.setText(user.getAddress());
-            txtEmail.setText(user.getEmail());
             txtUserName.setText(user.getUserName());
-            txtDateOfBirth.setText(user.getDateOfBirth());
             txtUserSurname.setText(user.getUserSurname());
+            txtEmail.setText(user.getEmail());
+            txtAddress.setText(user.getAddress());
+            txtDateOfBirth.setText(user.getDateOfBirth());
+            txtLogin.setText(user.getLogin());
+            txtPassword.setText(user.getPassword());
         });
     }
 
