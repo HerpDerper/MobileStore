@@ -1,6 +1,7 @@
 package com.example.mobilestore.Models;
 
 public class Product {
+
     private String productName, categoryName, description, guarantee, manufacturerName, productImage;
     private int productCount, ratingCount;
     private float rating, price;

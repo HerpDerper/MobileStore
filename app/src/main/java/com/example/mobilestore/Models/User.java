@@ -1,6 +1,7 @@
 package com.example.mobilestore.Models;
 
 public class User {
+
     private String userSurname, userName, email, login, password, roleName, address, dateOfBirth, avatar;
 
     public User() {

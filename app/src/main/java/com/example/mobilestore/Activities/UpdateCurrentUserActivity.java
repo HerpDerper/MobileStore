@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mobilestore.Models.User;
@@ -31,7 +32,8 @@ public class UpdateCurrentUserActivity extends AppCompatActivity {
     private final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
     Calendar date;
     CheckBox showPassword;
-    EditText txtLogin, txtPassword, txtAddress, txtEmail, txtUserName, txtUserSurname, txtDateOfBirth;
+    EditText txtLogin, txtPassword, txtAddress, txtUserName, txtUserSurname, txtDateOfBirth;
+    TextView txtEmail;
     Button btnChangeInformation;
     DatePickerDialog.OnDateSetListener picker;
     Bundle bundle;
@@ -115,10 +117,6 @@ public class UpdateCurrentUserActivity extends AppCompatActivity {
         }
         if (!txtUserSurname.getText().toString().trim().matches("[a-zA-Zа-яА-Я]{1,30}")) {
             Toast.makeText(this, "Некорректный ввод фамилии", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (!txtEmail.getText().toString().trim().matches("[a-zA-Z0-9]{3,20}@[a-zA-Z0-9]{3,15}[.][a-zA-Z]{2,5}")) {
-            Toast.makeText(this, "Некорректный ввод Email", Toast.LENGTH_SHORT).show();
             return;
         }
         if (date.getTimeInMillis() >= System.currentTimeMillis()) {

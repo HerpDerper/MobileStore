@@ -1,6 +1,7 @@
 package com.example.mobilestore.Models;
 
 public class Cart {
+
     private String userName, productName;
     private int productCount;
 

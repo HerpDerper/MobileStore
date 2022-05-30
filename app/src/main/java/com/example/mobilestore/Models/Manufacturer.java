@@ -1,6 +1,7 @@
 package com.example.mobilestore.Models;
 
 public class Manufacturer {
+
     private String manufacturerName, address;
 
     public Manufacturer() {

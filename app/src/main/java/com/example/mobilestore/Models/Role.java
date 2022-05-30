@@ -1,6 +1,7 @@
 package com.example.mobilestore.Models;
 
 public class Role {
+
     private String roleName;
 
     public Role() {

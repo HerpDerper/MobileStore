@@ -1,6 +1,7 @@
 package com.example.mobilestore.Models;
 
 public class Comment {
+
     private String text, productName, userName, timeComment;
     private int likeCount;
     private float rating;

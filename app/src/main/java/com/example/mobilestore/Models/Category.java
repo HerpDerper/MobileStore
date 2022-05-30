@@ -1,6 +1,7 @@
 package com.example.mobilestore.Models;
 
 public class Category {
+
     private String categoryName;
 
     public Category() {
