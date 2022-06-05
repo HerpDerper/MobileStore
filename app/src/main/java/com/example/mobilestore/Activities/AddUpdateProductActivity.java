@@ -79,6 +79,14 @@ public class AddUpdateProductActivity extends AppCompatActivity {
             Toast.makeText(this, "Не введено описание", Toast.LENGTH_SHORT).show();
             return;
         }
+        if (Integer.parseInt(txtProductCount.getText().toString()) >= Integer.MAX_VALUE || Integer.parseInt(txtProductCount.getText().toString()) <= Integer.MIN_VALUE) {
+            Toast.makeText(this, "Некорректный ввод количества", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (Float.parseFloat(txtPrice.getText().toString()) >= Float.MAX_VALUE || Float.parseFloat(txtPrice.getText().toString()) <= Float.MIN_VALUE) {
+            Toast.makeText(this, "Некорректный ввод цены", Toast.LENGTH_SHORT).show();
+            return;
+        }
         if (btnProductAddUpdate.getText().equals("Добавить")) {
             uploadImage();
         } else {
