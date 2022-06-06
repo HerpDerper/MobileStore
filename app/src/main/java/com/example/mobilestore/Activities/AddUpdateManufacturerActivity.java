@@ -45,6 +45,10 @@ public class AddUpdateManufacturerActivity extends AppCompatActivity {
     }
 
     public void manufacturerAddUpdateClick(View view) {
+        if (!txtManufacturerName.getText().toString().trim().matches("[a-zA-Zа-яА-Я]{1,30}")) {
+            Toast.makeText(this, "Некорректный ввод наименования", Toast.LENGTH_SHORT).show();
+            return;
+        }
         if (TextUtils.isEmpty(txtManufacturerName.getText())) {
             Toast.makeText(this, "Не введено наименование", Toast.LENGTH_SHORT).show();
             return;

@@ -59,8 +59,24 @@ public class AddUpdateProductActivity extends AppCompatActivity {
     }
 
     public void productAddUpdateClick(View view) {
+        if (!txtProductName.getText().toString().trim().matches("[a-zA-Zа-яА-Я]{1,30}")) {
+            Toast.makeText(this, "Некорректный ввод наименования", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (Integer.parseInt(txtProductCount.getText().toString()) >= Integer.MAX_VALUE || Integer.parseInt(txtProductCount.getText().toString()) <= 0) {
+            Toast.makeText(this, "Некорректный ввод количества", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (Float.parseFloat(txtPrice.getText().toString()) >= Float.MAX_VALUE || Float.parseFloat(txtPrice.getText().toString()) <= 0) {
+            Toast.makeText(this, "Некорректный ввод цены", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (!txtGuarantee.getText().toString().trim().matches("[0-9]{1,2} [a-zA-Zа-яА-Я]{1,30}")) {
+            Toast.makeText(this, "Некорректный ввод гарантии", Toast.LENGTH_SHORT).show();
+            return;
+        }
         if (TextUtils.isEmpty(txtProductName.getText())) {
-            Toast.makeText(this, "Не введено название", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Не введено наименование", Toast.LENGTH_SHORT).show();
             return;
         }
         if (TextUtils.isEmpty(txtProductCount.getText())) {
@@ -77,14 +93,6 @@ public class AddUpdateProductActivity extends AppCompatActivity {
         }
         if (TextUtils.isEmpty(txtDescription.getText())) {
             Toast.makeText(this, "Не введено описание", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (Integer.parseInt(txtProductCount.getText().toString()) >= Integer.MAX_VALUE || Integer.parseInt(txtProductCount.getText().toString()) <= Integer.MIN_VALUE) {
-            Toast.makeText(this, "Некорректный ввод количества", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (Float.parseFloat(txtPrice.getText().toString()) >= Float.MAX_VALUE || Float.parseFloat(txtPrice.getText().toString()) <= Float.MIN_VALUE) {
-            Toast.makeText(this, "Некорректный ввод цены", Toast.LENGTH_SHORT).show();
             return;
         }
         if (btnProductAddUpdate.getText().equals("Добавить")) {

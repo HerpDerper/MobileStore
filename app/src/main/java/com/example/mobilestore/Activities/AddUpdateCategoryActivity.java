@@ -44,8 +44,12 @@ public class AddUpdateCategoryActivity extends AppCompatActivity {
     }
 
     public void categoryAddUpdateClick(View view) {
+        if (!txtCategoryName.getText().toString().trim().matches("[a-zA-Zа-яА-Я]{1,30}")) {
+            Toast.makeText(this, "Некорректный ввод наименования", Toast.LENGTH_SHORT).show();
+            return;
+        }
         if (TextUtils.isEmpty(txtCategoryName.getText())) {
-            Toast.makeText(this, "Не введено название", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Не введено наименования", Toast.LENGTH_SHORT).show();
             return;
         }
         if (btnCategoryAddUpdate.getText().equals("Добавить")) {
