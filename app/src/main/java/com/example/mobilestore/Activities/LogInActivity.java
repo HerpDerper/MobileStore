@@ -68,7 +68,7 @@ public class LogInActivity extends AppCompatActivity {
                             }
                         });
                     } else
-                        Toast.makeText(getApplicationContext(), "Неправильный логин или пароль", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Неправильный email или пароль", Toast.LENGTH_SHORT).show();
                 });
     }
 
