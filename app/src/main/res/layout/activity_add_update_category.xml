@@ -8,37 +8,39 @@
 
         <EditText
             android:id="@+id/txtCategoryName"
-            android:layout_width="match_parent"
-            android:inputType="textPersonName|textCapWords"
+            android:layout_width="325dp"
             android:layout_height="wrap_content"
             android:hint="Название"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="10sp"/>
+            android:inputType="textPersonName|textCapWords"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnCategoryAddUpdate"
-            android:layout_width="220dp"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:background="@drawable/styles"
             android:gravity="center"
             android:onClick="categoryAddUpdateClick"
             android:text="Добавить"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="10sp"
+            android:layout_marginStart="40sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtCategoryName" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnCancel"
-            android:layout_width="220dp"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10sp"
+            android:layout_marginEnd="40sp"
             android:background="@drawable/styles"
             android:gravity="center"
+            android:onClick="cancelClick"
             android:text="Назад"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnCategoryAddUpdate"
-            android:layout_marginTop="10sp"
-            android:onClick="cancelClick"/>
+            app:layout_constraintTop_toBottomOf="@+id/txtCategoryName" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
