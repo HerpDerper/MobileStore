@@ -110,7 +110,7 @@
         android:id="@+id/btnChangeInformation"
         android:layout_width="220dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/styles"
+        android:background="@drawable/button_style"
         android:gravity="center"
         android:text="Изменить данные"
         app:layout_constraintEnd_toEndOf="parent"

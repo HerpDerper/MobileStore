@@ -49,6 +49,7 @@ public class UpdateCurrentUserActivity extends AppCompatActivity {
                 txtPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
             else
                 txtPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+            txtPassword.setSelection(txtPassword.length());
         });
         setDatePicker();
         txtDateOfBirth.setOnTouchListener((view, motionEvent) -> {

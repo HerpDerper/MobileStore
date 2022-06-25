@@ -45,7 +45,7 @@
         android:id="@+id/btnEnter"
         android:layout_width="175dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/styles"
+        android:background="@drawable/button_style"
         android:onClick="enterClick"
         android:text="Войти"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -72,7 +72,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btnEnter"
         android:layout_marginTop="30sp"
-        android:background="@drawable/styles"
+        android:background="@drawable/button_style"
         android:onClick="registrationClick"
         android:id="@+id/btnRegistration"/>
 

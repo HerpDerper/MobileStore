@@ -55,7 +55,11 @@ public class HomeFragment extends Fragment {
         View root = binding.getRoot();
         initialize();
         setData();
-        setOnClick();
+        imgAvatar.setOnClickListener(this::changeAvatarClick);
+        btnShowInformation.setOnClickListener(this::showInformationClick);
+        btnChangeInformation.setOnClickListener(this::changeInformationClick);
+        btnLogOut.setOnClickListener(this::logOutClick);
+        btnDeleteAccount.setOnClickListener(this::deleteAccountClick);
         return root;
     }
 
@@ -85,51 +89,57 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    private void setOnClick() {
-        imgAvatar.setOnClickListener(view -> {
-            Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-            photoPickerIntent.setType("image/*");
-            startActivityForResult(photoPickerIntent, CAMERA_REQUEST);
-        });
-        btnChangeInformation.setOnClickListener(view -> startActivity(new Intent(getActivity(), UpdateCurrentUserActivity.class).putExtra("IdUser", firebaseAuth.getCurrentUser().getUid())));
+    public void changeAvatarClick(View view) {
+        startActivityForResult(new Intent(Intent.ACTION_PICK).setType("image/*"), CAMERA_REQUEST);
+    }
 
-        btnDeleteAccount.setOnClickListener(view -> {
-            androidx.appcompat.app.AlertDialog.Builder dialog = new androidx.appcompat.app.AlertDialog.Builder(getActivity());
-            dialog.setTitle("Удаление данных")
-                    .setMessage("Вы действительно хотите удалить ваш аккаунт?")
-                    .setPositiveButton("Да", (dialogInterface, i) -> {
-                        deleteCommentLikes();
-                        deleteComments();
-                        deleteCarts();
-                        DocumentReference userReference = firebaseFirestore.collection("Users").document(firebaseAuth.getCurrentUser().getUid());
-                        userReference.delete();
-                        firebaseAuth.getCurrentUser().delete();
-                        firebaseAuth.signOut();
-                        startActivity(new Intent(getActivity(), LogInActivity.class));
-                    })
-                    .setNegativeButton("Нет", (dialogInterface, i) -> dialogInterface.cancel());
-            dialog.create().show();
-        });
+    public void showInformationClick(View view) {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Имя: ").append(user.getUserName()).append("\n");
+        builder.append("Фамилия: ").append(user.getUserSurname()).append("\n");
+        builder.append("Email: ").append(user.getEmail()).append("\n");
+        builder.append("Логин: ").append(user.getLogin()).append("\n");
+        builder.append("Адрес: ").append(user.getAddress()).append("\n");
+        builder.append("Дата рождения: ").append(user.getDateOfBirth()).append("\n");
+        AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+        dialog.setCancelable(true);
+        dialog.setTitle("Информация");
+        dialog.setMessage(builder.toString());
+        dialog.show();
+    }
 
-        btnLogOut.setOnClickListener(view -> {
-            firebaseAuth.signOut();
-            startActivity(new Intent(getActivity(), LogInActivity.class));
-        });
+    public void changeInformationClick(View view) {
+        startActivity(new Intent(getActivity(), UpdateCurrentUserActivity.class).putExtra("IdUser", firebaseAuth.getCurrentUser().getUid()));
+    }
 
-        btnShowInformation.setOnClickListener(view -> {
-            StringBuilder builder = new StringBuilder();
-            builder.append("Имя: ").append(user.getUserName()).append("\n");
-            builder.append("Фамилия: ").append(user.getUserSurname()).append("\n");
-            builder.append("Email: ").append(user.getEmail()).append("\n");
-            builder.append("Логин: ").append(user.getLogin()).append("\n");
-            builder.append("Адрес: ").append(user.getAddress()).append("\n");
-            builder.append("Дата рождения: ").append(user.getDateOfBirth()).append("\n");
-            AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
-            dialog.setCancelable(true);
-            dialog.setTitle("Информация");
-            dialog.setMessage(builder.toString());
-            dialog.show();
-        });
+    public void logOutClick(View view) {
+        androidx.appcompat.app.AlertDialog.Builder dialog = new androidx.appcompat.app.AlertDialog.Builder(getActivity());
+        dialog.setTitle("Выход из аккаунта")
+                .setMessage("Вы действительно хотите выйти из аккаунта?")
+                .setPositiveButton("Да", (dialogInterface, i) -> {
+                    firebaseAuth.signOut();
+                    startActivity(new Intent(getActivity(), LogInActivity.class));
+                })
+                .setNegativeButton("Нет", (dialogInterface, i) -> dialogInterface.cancel());
+        dialog.create().show();
+    }
+
+    public void deleteAccountClick(View view) {
+        androidx.appcompat.app.AlertDialog.Builder dialog = new androidx.appcompat.app.AlertDialog.Builder(getActivity());
+        dialog.setTitle("Удаление аккаунта")
+                .setMessage("Вы действительно хотите удалить ваш аккаунт?")
+                .setPositiveButton("Да", (dialogInterface, i) -> {
+                    deleteCommentLikes();
+                    deleteComments();
+                    deleteCarts();
+                    DocumentReference userReference = firebaseFirestore.collection("Users").document(firebaseAuth.getCurrentUser().getUid());
+                    userReference.delete();
+                    firebaseAuth.getCurrentUser().delete();
+                    firebaseAuth.signOut();
+                    startActivity(new Intent(getActivity(), LogInActivity.class));
+                })
+                .setNegativeButton("Нет", (dialogInterface, i) -> dialogInterface.cancel());
+        dialog.create().show();
     }
 
     @Override
